@@ -1,0 +1,48 @@
+.signup-form {
+  border: 1px solid rgb(226, 232, 240);
+  position: absolute;
+  top: calc(50vh + 60px);
+  left: 50vw;
+  translate: -50% -50%;
+  margin-bottom: 4vh;
+  padding: 10px 30px;
+  padding-top: 20px;
+  border-radius: 5px;
+  width: 35vw;
+}
+
+.signup-form input {
+  border: 1px solid rgb(226, 232, 240);
+}
+
+.dark-mode .signup-form input {
+  border: 1px solid rgb(30, 41, 59);
+}
+
+.dark-mode .signup-form {
+  border: 1px solid rgb(30, 41, 59);
+}
+
+.signup-form h1 {
+  font-size: 25px;
+}
+
+.signup-form input {
+  background: none;
+}
+
+.signup-form .buttons > a:hover {
+  background-color: rgb(241, 245, 249) !important;
+}
+
+.dark-mode .signup-form .buttons > a:hover {
+  background-color: rgb(30, 41, 59) !important;
+}
+
+.signup-form .buttons > .login {
+  border: 1px solid rgb(226, 232, 240) !important;
+}
+
+.dark-mode .signup-form .buttons > .login {
+  border: 1px solid rgb(30, 41, 59) !important;
+}

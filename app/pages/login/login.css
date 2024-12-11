@@ -1,0 +1,48 @@
+.login-form {
+  border: 1px solid rgb(226, 232, 240);
+  position: absolute;
+  top: calc(50vh + 60px);
+  left: 50vw;
+  translate: -50% -50%;
+  margin-bottom: 4vh;
+  padding: 10px 30px;
+  padding-top: 20px;
+  border-radius: 5px;
+  width: 35vw;
+}
+
+.login-form input {
+  border: 1px solid rgb(226, 232, 240);
+}
+
+.dark-mode .login-form input {
+  border: 1px solid rgb(30, 41, 59);
+}
+
+.dark-mode .login-form {
+  border: 1px solid rgb(30, 41, 59);
+}
+
+.login-form h1 {
+  font-size: 25px;
+}
+
+.login-form input {
+  background: none;
+}
+
+.login-form .buttons > a:hover {
+  background-color: rgb(241, 245, 249) !important;
+}
+
+.dark-mode .login-form .buttons > a:hover {
+  background-color: rgb(30, 41, 59) !important;
+}
+
+.login-form .buttons > .signup {
+  border: 1px solid rgb(226, 232, 240) !important;
+}
+
+.dark-mode .login-form .buttons > .signup {
+  border: 1px solid rgb(30, 41, 59) !important;
+}

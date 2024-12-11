@@ -1,0 +1,26 @@
+.new-listing-container {
+  width: 80vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 4vh;
+}
+
+.new-listing-container .inputs-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  row-gap: calc(1vh + 10px);
+  column-gap: 1vw;
+}
+
+.new-listing-container .inputs-container > .input {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.new-listing-container .preview-container {
+  width: 500px;
+}

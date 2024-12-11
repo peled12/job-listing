@@ -1,0 +1,69 @@
+.jobs-container {
+  padding: 10px 2vw;
+  max-width: 95vw;
+  margin: 10px auto;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  row-gap: 5vh;
+  column-gap: 1vw;
+}
+
+.inputs > div {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  position: relative;
+}
+
+.inputs .checkboxes-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputs .checkboxes {
+  display: flex;
+  height: 80%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.inputs .checkboxes .checkbox {
+  display: flex;
+  gap: 5%;
+  white-space: nowrap;
+}
+
+.inputs .checkboxes-container .reset-btn {
+  padding: 8px 16px;
+  background-color: rgb(2, 6, 23);
+  color: white;
+  font-family: Noto Sans, sans-serif;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.inputs .checkboxes-container .reset-btn:hover {
+  background-color: rgba(2, 6, 23, 0.9);
+}
+
+.dark-mode .inputs .checkboxes-container .reset-btn {
+  background-color: #fbfbfb;
+  color: rgb(2, 6, 23);
+}
+
+.dark-mode .inputs .checkboxes-container .reset-btn:hover {
+  background-color: #fbfbfbda;
+}
+
+.jobs {
+  display: grid;
+  gap: 1rem;
+  margin-top: 50px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}

@@ -1,0 +1,115 @@
+.my-listings-container {
+  width: 85vw;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 500px);
+  gap: 20px;
+}
+
+.my-listings-container .job {
+  width: 500px;
+}
+
+.my-listings-container .job .buttons > * {
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.my-listings-container .job .buttons > .publish-btn {
+  background-color: rgb(15, 23, 42);
+  color: rgb(248, 250, 252);
+  transition: 0.3s ease;
+}
+
+.dark-mode .my-listings-container .job .buttons > .publish-btn {
+  background-color: rgb(248, 250, 252);
+}
+
+.dark-mode .my-listings-container .job .buttons > .publish-btn > p {
+  color: rgb(15, 23, 42);
+}
+
+.dark-mode .my-listings-container .job .buttons > .publish-btn > svg {
+  color: rgb(15, 23, 42);
+}
+
+.my-listings-container .job .buttons > .publish-btn:hover {
+  opacity: 0.9;
+}
+
+.my-listings-container .job .draft {
+  background-color: rgb(241 245 249);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.dark-mode .my-listings-container .job .draft {
+  background-color: rgb(30, 41, 59);
+}
+
+.my-listings-container .job .expired {
+  background-color: rgb(239, 68, 68);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: rgb(248, 250, 252);
+}
+
+.dark-mode .my-listings-container .job .expired {
+  background-color: rgb(127, 29, 29);
+}
+
+.my-listings-container .job .active {
+  background-color: rgb(241 245 249);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.dark-mode .my-listings-container .job .active {
+  background-color: rgb(30, 41, 59);
+}
+
+.all-wrapper > .confirmation {
+  border: 1px solid #e5e7eb;
+}
+
+.dark-mode .all-wrapper .confirmation {
+  border: 1px solid #1e293b;
+}
+
+.all-wrapper > .confirmation .pay-btn {
+  background-color: rgb(15, 23, 42);
+  color: rgb(248, 250, 252);
+}
+
+.dark-mode .all-wrapper > .confirmation .pay-btn {
+  background-color: rgb(248, 250, 252);
+  color: rgb(15, 23, 42);
+}
+
+.dark-mode .publish-btn > svg > path {
+  color: rgb(15, 23, 42);
+}
+
+.publish-btn .opened {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 4px;
+  margin-top: 6px;
+  background-color: white;
+  color: rgb(15, 23, 42);
+}
+
+.dark-mode .publish-btn .opened {
+  border: 1px solid rgb(30, 41, 59);
+  background-color: rgb(2, 6, 23);
+}
+
+.publish-btn .opened button {
+  width: max-content;
+}

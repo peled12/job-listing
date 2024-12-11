@@ -1,0 +1,419 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  transition: 0.3s ease;
+  background-color: #fbfbfb;
+  overflow-x: hidden;
+}
+
+.dark-mode {
+  background-color: rgb(2, 6, 23);
+}
+
+.dark-mode * {
+  color: white;
+  border-color: white;
+}
+
+.navbar-filler {
+  font-size: 16px;
+  padding: 20px 0;
+  opacity: 0;
+}
+
+.navbar {
+  display: flex;
+  width: 100vw;
+  padding: 10px 10vw;
+  font-size: 16px;
+  border-bottom: 1px solid rgb(2, 6, 23);
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  z-index: 1;
+  background-color: #fbfbfb;
+  transition: 0.5s ease;
+  position: fixed;
+  top: 0;
+}
+
+.navbar > div {
+  display: flex;
+  align-items: center;
+}
+
+.navbar > div > .dark-mode-btn {
+  position: relative;
+  right: 3vw;
+}
+
+.dark-mode .navbar {
+  border-bottom: 1px solid white;
+  background-color: rgb(2, 6, 23);
+}
+
+.navbar svg {
+  height: 25px;
+  width: 25px;
+}
+
+.navbar a:hover {
+  transition: 0.3s ease;
+  color: rgb(55, 55, 55);
+}
+
+.dark-mode .navbar a:hover {
+  color: rgb(230, 230, 230);
+}
+
+.navbar .links {
+  display: flex;
+  gap: 2vw;
+}
+
+.custom-button .opened {
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 10px;
+  top: 110%;
+  background-color: white;
+}
+
+.custom-button .opened .seperator {
+  width: 100%;
+  height: 1px;
+  background-color: rgb(226, 232, 240);
+}
+
+.custom-button .opened > button {
+  font-weight: 400;
+}
+
+.dark-mode .custom-button .opened {
+  background-color: rgb(2, 6, 23);
+  border: 1px solid rgb(30, 41, 59);
+}
+
+.dark-mode .custom-button .opened .seperator {
+  background-color: rgb(30, 41, 59);
+}
+
+.custom-button {
+  padding: 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  border-color: rgb(241, 245, 249);
+  transition: 0.3s ease;
+}
+
+.dark-mode .custom-button {
+  border-color: rgb(30, 41, 59);
+}
+
+.custom-button:hover {
+  background-color: rgb(241, 245, 249);
+}
+
+.dark-mode .custom-button:hover {
+  background-color: rgb(30, 41, 59);
+}
+
+input,
+textarea,
+.custom-select {
+  border: 1px solid rgb(2, 6, 23);
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode .custom-select,
+.dark-mode select {
+  background-color: rgb(2, 6, 23);
+  color: white;
+  border: 1px solid white;
+  transition: 0.3s ease;
+}
+
+.custom-select {
+  appearance: none; /* Remove native arrow */
+  -webkit-appearance: none; /* For Safari/Chrome */
+  -moz-appearance: none; /* For Firefox */
+  cursor: pointer;
+}
+
+.custom-select-arrow {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  translate: 0 -50%;
+  cursor: pointer;
+}
+
+.all-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10001;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease-in-out 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30vw;
+}
+
+.all-wrapper > div {
+  background-color: white;
+}
+
+.dark-mode .all-wrapper > div {
+  background-color: rgb(2, 6, 23);
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  cursor: default;
+}
+
+/* HTML: <div class="loader"></div> */
+.main-loader {
+  height: 28px;
+  width: 28px;
+  --b: 8px;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#0000 10%, #f03355) content-box;
+  -webkit-mask: repeating-conic-gradient(
+      #0000 0deg,
+      #000 1deg 20deg,
+      #0000 21deg 36deg
+    ),
+    radial-gradient(
+      farthest-side,
+      #0000 calc(100% - var(--b) - 1px),
+      #000 calc(100% - var(--b))
+    );
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l4 1s infinite steps(10);
+}
+@keyframes l4 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.main-loader.hide {
+  display: none;
+}
+
+.z10000 {
+  z-index: 10000 !important;
+}
+
+.logout-container {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  translate: -50% -50%;
+  border: 1px solid rgb(241, 245, 249);
+  width: 20vw;
+  height: 20vh;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .logout-container {
+  background-color: rgb(2, 6, 23);
+  border: 1px solid rgb(30, 41, 59);
+}
+
+.navigation-loader-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3vh;
+}
+
+.navigation-loader {
+  width: 45px;
+  aspect-ratio: 1;
+  --c: no-repeat linear-gradient(#000 0 0);
+  background: var(--c), var(--c), var(--c);
+  animation: l15-1 1s infinite, l15-2 1s infinite;
+}
+
+.dark-mode .navigation-loader {
+  --c: no-repeat linear-gradient(#fff 0 0);
+}
+@keyframes l15-1 {
+  0%,
+  100% {
+    background-size: 20% 100%;
+  }
+  33%,
+  66% {
+    background-size: 20% 40%;
+  }
+}
+@keyframes l15-2 {
+  0%,
+  33% {
+    background-position: 0 0, 50% 100%, 100% 100%;
+  }
+  66%,
+  100% {
+    background-position: 100% 0, 0 100%, 50% 100%;
+  }
+}
+
+.job {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.job .icons svg {
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+}
+
+.job .icons svg > path {
+  transition: 0.3s ease;
+}
+
+.job .icons svg.red {
+  filter: drop-shadow(1px 4px 6px rgb(255, 0, 0));
+  transition: 0.3s ease;
+}
+
+.job .icons svg.red > path {
+  fill: red;
+}
+
+.dark-mode .job {
+  border: 1px solid rgba(30, 41, 59);
+}
+
+.job .job-tag {
+  background-color: rgb(241, 245, 249);
+}
+
+.dark-mode .job .job-tag {
+  background-color: rgb(30, 41, 59);
+}
+
+.job .job-tag * {
+  color: rgb(2, 6, 23) !important;
+  font-weight: 500;
+}
+
+.dark-mode .job .job-tag * {
+  color: rgb(248, 250, 252) !important;
+}
+
+.job .job-tag * {
+  color: white;
+}
+
+.job .view-more-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: rgb(2, 6, 23);
+  color: white;
+  transition: 0.3s ease;
+}
+
+.dark-mode .job .view-more-btn {
+  color: rgb(2, 6, 23);
+  background-color: white;
+}
+
+.job .view-more-btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark-mode .job .view-more-btn:hover {
+  color: rgb(2, 6, 23, 0.8);
+}
+
+.job .job-more {
+  width: 40vw;
+  padding: 20px;
+  opacity: 1;
+  background-color: #fbfbfb;
+  animation: fade-in 0.2s 0.1s forwards;
+}
+
+.fade-out {
+  animation: fade-out 0.2s 0.1s forwards !important;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dark-mode .job .job-more {
+  background-color: rgb(2, 6, 23);
+}
+
+.job .job-more > button > svg {
+  height: 20px;
+  width: 20px;
+}
+
+.job .job-more > button {
+  border: 2px solid #e5e7eb;
+  color: rgb(60, 60, 60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: 0.3s ease;
+}
+
+.job .job-more > button:hover {
+  color: black;
+  border-color: #d1d3d7;
+  opacity: 1;
+}
+
+.dark-mode .job .job-more > button {
+  border-color: rgb(30, 41, 59);
+  color: #e2e2e2;
+}
+
+.dark-mode .job .job-more > button:hover {
+  border-color: rgb(42, 56, 81);
+  color: white;
+}
