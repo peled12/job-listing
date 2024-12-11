@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import "./myListings.css";
 
 import Job from "@/app/components/Job";
