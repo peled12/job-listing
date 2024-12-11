@@ -10,6 +10,7 @@ import {
 import UserSettings from "./components/UserSettings";
 
 import "./globals.css";
+import { Suspense } from "react";
 
 /*
   TODO: fix bug it takes a long time navigating
@@ -39,7 +40,9 @@ export default function RootLayout({
               <UserSettings />
             </div>
           </div>
-          <NavigationTransition>{children}</NavigationTransition>
+          <Suspense>
+            <NavigationTransition>{children}</NavigationTransition>
+          </Suspense>
         </UserContextProvider>
       </body>
     </html>
