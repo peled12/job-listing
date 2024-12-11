@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <UserContextProvider>
-          <div className="navbar-filler">HI</div>
-          <Suspense fallback={<div className="navigation-loader"></div>}>
+        <Suspense fallback={<div className="navigation-loader"></div>}>
+          <UserContextProvider>
+            <div className="navbar-filler">HI</div>
             <div className="navbar">
               <Clock />
               <div className="main-loader hide"></div>
@@ -38,8 +38,8 @@ export default function RootLayout({
               </div>
             </div>
             <NavigationTransition>{children}</NavigationTransition>
-          </Suspense>
-        </UserContextProvider>
+          </UserContextProvider>
+        </Suspense>
       </body>
     </html>
   );
