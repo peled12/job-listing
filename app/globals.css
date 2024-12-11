@@ -417,3 +417,17 @@ textarea,
   border-color: rgb(42, 56, 81);
   color: white;
 }
+
+.back-home-btn {
+  background-color: rgb(15, 23, 42);
+  color: rgb(248, 250, 252);
+  padding: 10px 15px;
+  border-radius: 15px;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.dark-mode .back-home-btn {
+  background-color: rgb(248, 250, 252);
+  color: rgb(15, 23, 42);
+}

@@ -10,7 +10,10 @@ import {
 import UserSettings from "./components/UserSettings";
 
 import "./globals.css";
-import { Suspense } from "react";
+
+/*
+  TODO: fix bug it takes a long time navigating
+*/
 
 export default function RootLayout({
   children,
@@ -20,32 +23,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Suspense
-          fallback={
-            <div className="navigation-loader-container">
-              <div className="navigation-loader"></div>
+        <UserContextProvider>
+          <div className="navbar-filler">HI</div>
+          <div className="navbar">
+            <Clock />
+            <div className="main-loader hide"></div>
+            <div className="error-sign text-xl transition !text-red-600 !hidden">
+              :(
             </div>
-          }
-        >
-          <UserContextProvider>
-            <div className="navbar-filler">HI</div>
-            <div className="navbar">
-              <Clock />
-              <div className="main-loader hide"></div>
-              <div className="error-sign text-xl transition !text-red-600 !hidden">
-                :(
-              </div>
-              <div className="links">
-                <DarkMode />
-                <CustomLink url="/pages/jobs" className="custom-button">
-                  Job Listing
-                </CustomLink>
-                <UserSettings />
-              </div>
+            <div className="links">
+              <DarkMode />
+              <CustomLink url="/pages/jobs" className="custom-button">
+                Job Listing
+              </CustomLink>
+              <UserSettings />
             </div>
-            <NavigationTransition>{children}</NavigationTransition>
-          </UserContextProvider>
-        </Suspense>
+          </div>
+          <NavigationTransition>{children}</NavigationTransition>
+        </UserContextProvider>
       </body>
     </html>
   );

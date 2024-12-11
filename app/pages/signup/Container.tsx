@@ -7,8 +7,6 @@ import { FormEvent, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 
-import { CustomLink } from "@/app/custom_hooks/NavigationTransition";
-
 interface ValidationParams {
   email: string;
   username: string;
@@ -198,12 +196,6 @@ const Container = ({ children }: { children: React.ReactNode }) => {
           </p>
           <div className="buttons flex flex-row-reverse gap-x-1">
             {children}
-            <CustomLink url="/pages/login" className="p-2 rounded-lg login">
-              Login
-            </CustomLink>
-            <CustomLink url="/pages/jobs" className="p-2 rounded-lg">
-              Cancel
-            </CustomLink>
           </div>
         </div>
       </form>

@@ -1,6 +1,8 @@
 import Container from "./Container";
 import "./signup.css";
 
+import { CustomLink } from "@/app/custom_hooks/NavigationTransition";
+
 const Signup = () => {
   return (
     <>
@@ -11,6 +13,12 @@ const Signup = () => {
         >
           Sign up
         </button>
+        <CustomLink url="/pages/login" className="p-2 rounded-lg login">
+          Login
+        </CustomLink>
+        <CustomLink url="/pages/jobs" className="p-2 rounded-lg">
+          Cancel
+        </CustomLink>
       </Container>
     </>
   );
