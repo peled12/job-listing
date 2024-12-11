@@ -94,7 +94,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
 
       // filter the job manually if clicked on unfavorite and its showing only favorites
       if (filter === "favorite" && !addFilter && inputs.only_show_favorites)
-        setfilteredJobs(initJobs.filter((job) => newArray.includes(jobId)));
+        setfilteredJobs(initJobs.filter((job) => newArray.includes(job.id!)));
     };
 
     if (!user) {
@@ -206,9 +206,6 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
         }, 150);
       }, 600);
     }
-
-    // method to update the filtering array (either hiddenArr or favoriteArr)
-    const updateFilteringStates = (newStateArray: string[]) => {};
   };
 
   return (

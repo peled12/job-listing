@@ -52,7 +52,7 @@ const Page = () => {
     return (
       <div className="w-full flex flex-col text-center mt-7 gap-2">
         <h1 className="text-3xl">Job Not Found</h1>
-        <p>Problem find the job your'e looking to edit.</p>
+        <p>Problem find the job your&apos;e looking to edit.</p>
       </div>
     );
 

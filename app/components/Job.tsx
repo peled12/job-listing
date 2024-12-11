@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { PiMoneyLight, PiGraduationCap } from "react-icons/pi";
 import { SlCalender } from "react-icons/sl";
-import { FaRegEyeSlash, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaRegEyeSlash, FaRegHeart } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { HiXMark } from "react-icons/hi2";
 

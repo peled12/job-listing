@@ -31,7 +31,7 @@ export const CustomLink = ({
 }: {
   url: string;
   className?: string;
-  state?: any;
+  state?: string | object;
   children: React.ReactNode;
 }) => {
   const { navigateWithTransition } = useTransitionNavigate();
@@ -62,7 +62,7 @@ export const useTransitionNavigate = () => {
   }: {
     url: string;
     replace?: boolean;
-    state?: any;
+    state?: string | object;
   }) => {
     // have a replace paramter to also include navigating with replace
 
