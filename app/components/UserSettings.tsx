@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
 import { useUserContext } from "../custom_hooks/UserContext";
-import { MdKeyboardArrowDown } from "react-icons/md";
 
 import {
   CustomLink,
@@ -19,24 +16,7 @@ const UserSettings = () => {
   const { user, saveUser } = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
 
-  const [isActive, setisActive] = useState<boolean>(false);
-
-  const toggleMethods = (e: React.MouseEvent): void => {
-    const clickedElement = e.target as HTMLElement;
-
-    if (
-      !clickedElement.closest(".opened") ||
-      clickedElement.tagName === "BUTTON" ||
-      clickedElement.tagName === "A"
-    ) {
-      document.querySelector(".wrapper")?.classList.toggle("hidden");
-      setisActive((prev) => !prev);
-    }
-  };
-
   const logout = (): void => {
-    setisActive(false); // hide the settings
-
     const logoutContainer = document.querySelector(".logout-container");
 
     logoutContainer?.classList.remove("!hidden"); // show the logout message
