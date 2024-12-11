@@ -85,7 +85,7 @@ const Page = () => {
 
     try {
       const res = await fetch(
-        process.env.PUBLIC_API_URL + "/api/users/" + user?.id,
+        process.env.NEXT_PUBLIC_API_URL + "/api/users/" + user?.id,
         {
           method: "PATCH",
           // add the new job to the user's job draft

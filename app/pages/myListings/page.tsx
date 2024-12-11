@@ -61,7 +61,7 @@ const Page = () => {
           const newTime = currentTime + extraTime;
 
           const response = await fetch(
-            process.env.PUBLIC_API_URL + "/api/jobs",
+            process.env.NEXT_PUBLIC_API_URL + "/api/jobs",
             {
               method: "POST",
               body: JSON.stringify({
@@ -83,7 +83,7 @@ const Page = () => {
           const newTime = listing.valid_through! + extraTime;
 
           const response = await fetch(
-            process.env.PUBLIC_API_URL + "/api/patchJobValidity",
+            process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
@@ -105,7 +105,7 @@ const Page = () => {
           const newTime = currentTime + extraTime;
 
           const response = await fetch(
-            process.env.PUBLIC_API_URL + "/api/patchJobValidity",
+            process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
