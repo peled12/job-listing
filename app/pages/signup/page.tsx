@@ -1,16 +1,6 @@
 import Container from "./Container";
 import "./signup.css";
 
-import dynamic from "next/dynamic";
-
-const DynamicCustomLink = dynamic(
-  () =>
-    import("@/app/custom_hooks/NavigationTransition").then(
-      (mod) => mod.CustomLink
-    ),
-  { ssr: false }
-);
-
 const Signup = () => {
   return (
     <>
@@ -21,12 +11,6 @@ const Signup = () => {
         >
           Sign up
         </button>
-        <DynamicCustomLink url="/pages/login" className="p-2 rounded-lg login">
-          Login
-        </DynamicCustomLink>
-        <DynamicCustomLink url="/pages/jobs" className="p-2 rounded-lg">
-          Cancel
-        </DynamicCustomLink>
       </Container>
     </>
   );

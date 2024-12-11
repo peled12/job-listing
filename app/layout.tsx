@@ -20,7 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Suspense fallback={<div className="navigation-loader"></div>}>
+        <Suspense
+          fallback={
+            <div className="navigation-loader-container">
+              <div className="navigation-loader"></div>
+            </div>
+          }
+        >
           <UserContextProvider>
             <div className="navbar-filler">HI</div>
             <div className="navbar">
