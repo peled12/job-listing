@@ -131,7 +131,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
     try {
       // patch the new array to the user
       const response = await fetch(
-        "http://localhost:3000/api/users/" + user?.id,
+        process.env.PUBLIC_API_URL + "/api/users/" + user?.id,
         { method: "PATCH", body: JSON.stringify({ jobs_filter: newFilterObj }) }
       );
 
@@ -179,7 +179,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
     try {
       // patch the new array to the user
       const response = await fetch(
-        "http://localhost:3000/api/users/" + user?.id,
+        process.env.PUBLIC_API_URL + "/api/users/" + user?.id,
         {
           method: "PATCH",
           body: JSON.stringify({ jobs_filter: { hidden: [], favorite: [] } }),

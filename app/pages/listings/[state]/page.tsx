@@ -84,13 +84,16 @@ const Page = () => {
         [insertedJob, ...(user?.jobs_draft || [])];
 
     try {
-      const res = await fetch("http://localhost:3000/api/users/" + user?.id, {
-        method: "PATCH",
-        // add the new job to the user's job draft
-        body: JSON.stringify({
-          jobs_draft: newUserJobsDraft,
-        }),
-      });
+      const res = await fetch(
+        process.env.PUBLIC_API_URL + "/api/users/" + user?.id,
+        {
+          method: "PATCH",
+          // add the new job to the user's job draft
+          body: JSON.stringify({
+            jobs_draft: newUserJobsDraft,
+          }),
+        }
+      );
 
       // throw error if needed
       if (!res.ok) throw new Error("Problem saving job.");

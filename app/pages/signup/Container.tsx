@@ -114,7 +114,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
         jobs_draft: [],
       };
 
-      const res = await fetch("http://localhost:3000/api/users", {
+      const res = await fetch(process.env.PUBLIC_API_URL + "/api/users", {
         method: "POST",
         body: JSON.stringify(newUser),
       });

@@ -6,7 +6,7 @@ import { Job } from "../types";
 */
 
 const Page = async () => {
-  const response = await fetch("http://localhost:3000/api/jobs", {
+  const response = await fetch(process.env.PUBLIC_API_URL + "/api/jobs", {
     next: { revalidate: 60 },
   });
 

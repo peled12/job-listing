@@ -58,14 +58,17 @@ const Page = () => {
         case "Publish": {
           const newTime = currentTime + extraTime;
 
-          const response = await fetch("http://localhost:3000/api/jobs", {
-            method: "POST",
-            body: JSON.stringify({
-              ...listing,
-              new_time: newTime,
-              user_id: user?.id,
-            }),
-          });
+          const response = await fetch(
+            process.env.PUBLIC_API_URL + "/api/jobs",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                ...listing,
+                new_time: newTime,
+                user_id: user?.id,
+              }),
+            }
+          );
 
           // throw error if failed
           if (!response.ok) throw new Error("Problem posting job.");
@@ -78,7 +81,7 @@ const Page = () => {
           const newTime = listing.valid_through! + extraTime;
 
           const response = await fetch(
-            "http://localhost:3000/api/patchJobValidity",
+            process.env.PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
@@ -100,7 +103,7 @@ const Page = () => {
           const newTime = currentTime + extraTime;
 
           const response = await fetch(
-            "http://localhost:3000/api/patchJobValidity",
+            process.env.PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
