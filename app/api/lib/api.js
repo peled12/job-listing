@@ -2,10 +2,10 @@ import mysql from "mysql2/promise";
 
 export default async function getConnection() {
   return mysql.createConnection({
-    host: "localhost",
-    database: "job_listing",
-    user: "Philip",
-    password: "PeRen213422_180408",
+    host: process.env.HOST,
+    database: process.env.DATABASE,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
   });
 }
 

@@ -17,7 +17,7 @@ import {
   useUrlState,
 } from "@/app/custom_hooks/NavigationTransition";
 
-const page = () => {
+const Page = () => {
   const { user, saveUser } = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
 
@@ -144,4 +144,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -5,7 +5,7 @@ import { Job } from "../types";
   TODO: handle loading / error displays
 */
 
-const page = async () => {
+const Page = async () => {
   const response = await fetch("http://localhost:3000/api/jobs", {
     next: { revalidate: 60 },
   });
@@ -20,4 +20,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

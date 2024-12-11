@@ -2,7 +2,6 @@
 
 import { useTransitionNavigate } from "@/app/custom_hooks/NavigationTransition";
 import { useUserContext } from "@/app/custom_hooks/UserContext";
-import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -31,8 +30,6 @@ const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/;
 const Container = ({ children }: { children: React.ReactNode }) => {
   const { saveUser } = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
-
-  const router = useRouter();
 
   const [emailErr, setemailErr] = useState<string>("");
   const [usernameErr, setusernameErr] = useState<string>("");
