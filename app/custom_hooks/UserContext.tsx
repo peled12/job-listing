@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 import { User } from "../pages/types";
 
@@ -18,14 +18,16 @@ export const UserContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setuser] = useState<User>(() => {
+  const [user, setuser] = useState<User>(undefined);
+
+  useEffect(() => {
     const stored = localStorage.getItem("user-data");
 
     // undefined will become a string through localStorage
     if (stored === "undefined") return undefined;
 
-    return stored ? JSON.parse(stored) : undefined;
-  });
+    setuser(stored ? JSON.parse(stored) : undefined);
+  }, []);
 
   // method to update the user
   const saveUser = (newUser: User): void => {
