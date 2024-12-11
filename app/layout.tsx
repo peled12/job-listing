@@ -10,6 +10,7 @@ import {
 import UserSettings from "./components/UserSettings";
 
 import "./globals.css";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -21,21 +22,23 @@ export default function RootLayout({
       <body>
         <UserContextProvider>
           <div className="navbar-filler">HI</div>
-          <div className="navbar">
-            <Clock />
-            <div className="main-loader hide"></div>
-            <div className="error-sign text-xl transition !text-red-600 !hidden">
-              :(
+          <Suspense fallback={<div className="navigation-loader"></div>}>
+            <div className="navbar">
+              <Clock />
+              <div className="main-loader hide"></div>
+              <div className="error-sign text-xl transition !text-red-600 !hidden">
+                :(
+              </div>
+              <div className="links">
+                <DarkMode />
+                <CustomLink url="/pages/jobs" className="custom-button">
+                  Job Listing
+                </CustomLink>
+                <UserSettings />
+              </div>
             </div>
-            <div className="links">
-              <DarkMode />
-              <CustomLink url="/pages/jobs" className="custom-button">
-                Job Listing
-              </CustomLink>
-              <UserSettings />
-            </div>
-          </div>
-          <NavigationTransition>{children}</NavigationTransition>
+            <NavigationTransition>{children}</NavigationTransition>
+          </Suspense>
         </UserContextProvider>
       </body>
     </html>
