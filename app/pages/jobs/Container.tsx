@@ -24,18 +24,11 @@ const initInputs: InputProps = {
   only_show_favorites: false,
 };
 
-const Container = ({
-  initJobs,
-  error,
-}: {
-  initJobs?: Job[];
-  error?: boolean;
-}) => {
+const Container = ({ initJobs }: { initJobs: Job[] }) => {
   const { user, saveUser }: UserContextType = useUserContext();
 
   const [inputs, setinputs] = useState<InputProps>(initInputs);
-  // use type assertion (if its undefined, an error / loading message would appear)
-  const [filteredJobs, setfilteredJobs] = useState<Job[]>(initJobs!);
+  const [filteredJobs, setfilteredJobs] = useState<Job[]>(initJobs);
 
   // "filtering" arrays
   const [hiddenArr, sethiddenArr] = useState<string[]>(
@@ -44,28 +37,6 @@ const Container = ({
   const [favoriteArr, setfavoriteArr] = useState<string[]>(
     user ? user.jobs_filter.favorite : []
   );
-
-  // handle error / loading / no jobs exist
-
-  if (error) {
-    return (
-      <div className="m-8 !text-red-500 text-xl">
-        Error loading jobs. Please try again later.
-      </div>
-    );
-  }
-
-  if (!initJobs) {
-    return (
-      <div className="relative left-16 m-8 w-max">
-        <div className="loading-jobs"></div>
-      </div>
-    );
-  }
-
-  if (!initJobs.length) {
-    return <div className="m-8">No jobs available at the moment.</div>;
-  }
 
   const changeInput = (
     key: keyof InputProps,
@@ -269,18 +240,12 @@ const Container = ({
           resetFiltering={resetFiltering}
         />
       </div>
-      {error ? (
-        <div className="m-8 text-red-500">
-          Error loading jobs. Please try again later.
-        </div>
-      ) : (
-        <AllJobs
-          jobs={filteredJobs}
-          hiddenArr={hiddenArr}
-          favoriteArr={favoriteArr}
-          handleChangeUserFilter={handleChangeUserFilter}
-        />
-      )}
+      <AllJobs
+        jobs={filteredJobs}
+        hiddenArr={hiddenArr}
+        favoriteArr={favoriteArr}
+        handleChangeUserFilter={handleChangeUserFilter}
+      />
     </div>
   );
 };

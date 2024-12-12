@@ -8,18 +8,22 @@ import Job from "@/app/components/Job";
 import { CustomLink } from "@/app/custom_hooks/NavigationTransition";
 import { useUserContext } from "@/app/custom_hooks/UserContext";
 import { Job as JobType } from "../types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { HiXMark } from "react-icons/hi2";
 import CustomSelect from "@/app/components/CustomSelect";
-
-const currentTime = new Date().getTime();
 
 type OperationType = "Publish" | "Extend" | "Republish";
 const toMilliseconds: number = 24 * 60 * 60 * 1000;
 
 const Page = () => {
   const { user, saveUser } = useUserContext();
+
+  // initilize the current time
+  const [currentTime, setcurrentTime] = useState<number>();
+  useEffect(() => {
+    setcurrentTime(new Date().getTime());
+  }, []);
 
   // states to handle the confirm action pop-up
   const [actionParams, setactionParams] = useState<{
@@ -52,7 +56,7 @@ const Page = () => {
     loader?.classList.remove("hide");
 
     try {
-      const currentTime = new Date().getTime();
+      const currentTime = new Date().getTime(); // get currentTime again to get the new time
       const extraTime = extraDays * toMilliseconds;
 
       // switch between operations
@@ -193,7 +197,8 @@ const Page = () => {
     <>
       <h1 className="m-4 p-4 text-4xl">My Listings</h1>
       <div className="my-listings-container">
-        {user?.jobs_draft &&
+        {currentTime &&
+          user?.jobs_draft &&
           user.jobs_draft.map((listing, index) => (
             <Job
               job={listing}
