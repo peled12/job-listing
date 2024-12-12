@@ -24,7 +24,35 @@ const initInputs: InputProps = {
   only_show_favorites: false,
 };
 
-const Container = ({ initJobs }: { initJobs: Job[] }) => {
+const Container = ({
+  initJobs,
+  error,
+}: {
+  initJobs?: Job[];
+  error?: boolean;
+}) => {
+  // handle error / loading / no jobs exist
+
+  if (error) {
+    return (
+      <div className="m-8 !text-red-500 text-xl">
+        Error loading jobs. Please try again later.
+      </div>
+    );
+  }
+
+  if (!initJobs) {
+    return (
+      <div className="relative left-16 m-8 w-max">
+        <div className="loading-jobs"></div>
+      </div>
+    );
+  }
+
+  if (!initJobs.length) {
+    return <div className="m-8">No jobs available at the moment.</div>;
+  }
+
   const { user, saveUser }: UserContextType = useUserContext();
 
   const [inputs, setinputs] = useState<InputProps>(initInputs);
@@ -240,12 +268,18 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
           resetFiltering={resetFiltering}
         />
       </div>
-      <AllJobs
-        jobs={filteredJobs}
-        hiddenArr={hiddenArr}
-        favoriteArr={favoriteArr}
-        handleChangeUserFilter={handleChangeUserFilter}
-      />
+      {error ? (
+        <div className="m-8 text-red-500">
+          Error loading jobs. Please try again later.
+        </div>
+      ) : (
+        <AllJobs
+          jobs={filteredJobs}
+          hiddenArr={hiddenArr}
+          favoriteArr={favoriteArr}
+          handleChangeUserFilter={handleChangeUserFilter}
+        />
+      )}
     </div>
   );
 };
