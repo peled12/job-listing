@@ -31,6 +31,20 @@ const Container = ({
   initJobs?: Job[];
   error?: boolean;
 }) => {
+  const { user, saveUser }: UserContextType = useUserContext();
+
+  const [inputs, setinputs] = useState<InputProps>(initInputs);
+  // use type assertion (if its undefined, an error / loading message would appear)
+  const [filteredJobs, setfilteredJobs] = useState<Job[]>(initJobs!);
+
+  // "filtering" arrays
+  const [hiddenArr, sethiddenArr] = useState<string[]>(
+    user ? user.jobs_filter.hidden : []
+  );
+  const [favoriteArr, setfavoriteArr] = useState<string[]>(
+    user ? user.jobs_filter.favorite : []
+  );
+
   // handle error / loading / no jobs exist
 
   if (error) {
@@ -52,19 +66,6 @@ const Container = ({
   if (!initJobs.length) {
     return <div className="m-8">No jobs available at the moment.</div>;
   }
-
-  const { user, saveUser }: UserContextType = useUserContext();
-
-  const [inputs, setinputs] = useState<InputProps>(initInputs);
-  const [filteredJobs, setfilteredJobs] = useState<Job[]>(initJobs);
-
-  // "filtering" arrays
-  const [hiddenArr, sethiddenArr] = useState<string[]>(
-    user ? user.jobs_filter.hidden : []
-  );
-  const [favoriteArr, setfavoriteArr] = useState<string[]>(
-    user ? user.jobs_filter.favorite : []
-  );
 
   const changeInput = (
     key: keyof InputProps,
