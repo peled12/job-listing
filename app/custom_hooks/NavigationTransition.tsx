@@ -39,8 +39,6 @@ export const CustomLink = ({
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    // TODO: figure out how to pass state here
-
     navigateWithTransition({ url: url, state: state });
   };
 

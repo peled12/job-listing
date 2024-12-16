@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { HiXMark } from "react-icons/hi2";
 import CustomSelect from "@/app/components/CustomSelect";
 
-type OperationType = "Publish" | "Extend" | "Republish";
+type OperationType = "Publish" | "Extend" | "Republish" | "Delete";
 const toMilliseconds: number = 24 * 60 * 60 * 1000;
 
 const Page = () => {
@@ -28,11 +28,12 @@ const Page = () => {
   // states to handle the confirm action pop-up
   const [actionParams, setactionParams] = useState<{
     listing: JobType;
-    extraDays: number;
+    extraDays: number; // if operation is Delete extraDays would be 0
     operation: OperationType;
   }>();
 
-  const updateOrCreateJob = async (
+  // method to update the job's validity
+  const updateJob = async (
     listing: JobType,
     extraDays: number,
     operation: OperationType
@@ -65,13 +66,13 @@ const Page = () => {
           const newTime = currentTime + extraTime;
 
           const response = await fetch(
-            process.env.NEXT_PUBLIC_API_URL + "/api/jobs",
+            process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
             {
-              method: "POST",
+              method: "PATCH",
               body: JSON.stringify({
                 ...listing,
                 new_time: newTime,
-                user_id: user?.id,
+                id: listing.id,
               }),
             }
           );
@@ -93,7 +94,6 @@ const Page = () => {
               body: JSON.stringify({
                 new_time: newTime,
                 id: listing.id,
-                user_id: user?.id,
               }),
             }
           );
@@ -115,7 +115,6 @@ const Page = () => {
               body: JSON.stringify({
                 new_time: newTime,
                 id: listing.id,
-                user_id: user?.id,
               }),
             }
           );
@@ -140,6 +139,42 @@ const Page = () => {
     }
   };
 
+  // method to delete the job
+  const deleteJob = async (id: string) => {
+    // start the animation
+    const loader = document.querySelector(".main-loader");
+    loader?.classList.remove("hide");
+
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/api/jobs",
+        {
+          method: "DELETE",
+          body: id,
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to delete job");
+
+      // update user
+      const newUser = { ...user! };
+      // use type assertion; you cant delete something that doesn't exist
+      newUser.jobs_draft = newUser.jobs_draft!.filter(
+        (listing) => listing.id !== id
+      );
+
+      saveUser(newUser);
+    } catch (err) {
+      console.error(err);
+
+      alert(
+        "Problem deleting job. Please check your internet or try again later."
+      );
+    } finally {
+      loader?.classList.add("hide"); // end the animation
+    }
+  };
+
   // display the action confirmation div & save the params
   const handleClick = (
     listing: JobType,
@@ -161,14 +196,19 @@ const Page = () => {
       if (clickedElement.closest(".confirmation")) return;
     }
 
-    setactionParams(undefined); // undisplay the action confirmation div & unsave the params
     if (confirmed) {
-      updateOrCreateJob(
-        actionParams!.listing,
-        actionParams!.extraDays,
-        actionParams!.operation
-      );
+      // differ between deleting a job and updating its validity
+      if (actionParams?.operation === "Delete")
+        deleteJob(actionParams!.listing.id!);
+      else
+        updateJob(
+          actionParams!.listing,
+          actionParams!.extraDays,
+          actionParams!.operation
+        );
     }
+
+    setactionParams(undefined); // undisplay the action confirmation div & unsave the params
   };
 
   const actionButton = (listing: JobType, operation: OperationType) => (
@@ -220,7 +260,12 @@ const Page = () => {
                 >
                   Edit
                 </CustomLink>
-                <button className="custom-button">Delete</button>
+                <button
+                  className="custom-button"
+                  onClick={() => handleClick(listing, 0, "Delete")}
+                >
+                  Delete
+                </button>
               </div>
             </Job>
           ))}
@@ -232,37 +277,64 @@ const Page = () => {
               className="absolute top-3 right-3 w-5 h-5 cursor-pointer"
               onClick={() => handleConfirm(false)}
             />
-            <h1 className="text-2xl mb-1">
-              {actionParams.operation} {actionParams.listing.title} for{" "}
-              {actionParams.extraDays} days
-            </h1>
-            <p className="opacity-50 mb-3">This purchase is non-refundable</p>
-            <p>
-              By paying, your post will be published for{" "}
-              {actionParams.extraDays}{" "}
-              {actionParams.operation === "Extend"
-                ? "more days"
-                : "days from now"}
-              .
-            </p>
-            <p className="mb-8">
-              You can always re-extend the duration of your post being
-              published.
-            </p>
-            <div className="flex justify-between">
-              <button
-                className="pay-btn rounded-lg py-2 w-full hover:opacity-85 transition font-bold"
-                onClick={() => handleConfirm(true)}
-              >
-                Pay{" "}
-                {actionParams.extraDays === 30
-                  ? "100"
-                  : actionParams.extraDays === 60
-                  ? "175"
-                  : "200"}
-                $
-              </button>
-            </div>
+            {actionParams.operation === "Delete" ? (
+              <>
+                <h1 className="text-2xl mb-1">
+                  Delete {actionParams.listing.title} for good?
+                </h1>
+                <p className="opacity-50 mb-3">
+                  This purchase is non-refundable
+                </p>
+                <p className="mb-8">
+                  After clicking confirm, {actionParams.listing.title} will be
+                  deleted and you will not get your money back
+                </p>
+                <div className="flex justify-between">
+                  <button
+                    className="pay-btn rounded-lg py-2 w-full hover:opacity-85 transition font-bold"
+                    onClick={() => handleConfirm(true)}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h1 className="text-2xl mb-1">
+                  {actionParams.operation} {actionParams.listing.title} for{" "}
+                  {actionParams.extraDays} days
+                </h1>
+                <p className="opacity-50 mb-3">
+                  This purchase is non-refundable
+                </p>
+                <p>
+                  By paying, your post will be published for{" "}
+                  {actionParams.extraDays}{" "}
+                  {actionParams.operation === "Extend"
+                    ? "more days"
+                    : "days from now"}
+                  .
+                </p>
+                <p className="mb-8">
+                  You can always re-extend the duration of your post being
+                  published.
+                </p>
+                <div className="flex justify-between">
+                  <button
+                    className="pay-btn rounded-lg py-2 w-full hover:opacity-85 transition font-bold"
+                    onClick={() => handleConfirm(true)}
+                  >
+                    Pay{" "}
+                    {actionParams.extraDays === 30
+                      ? "100"
+                      : actionParams.extraDays === 60
+                      ? "175"
+                      : "200"}
+                    $
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

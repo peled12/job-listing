@@ -94,6 +94,8 @@ const Inputs = ({
           className="mt-3 rounded h-10 text-base px-3"
           id="salary"
           type="number"
+          min={1}
+          step={1}
           onChange={(e) => handleChange("salary", e.target.value)}
           required
           value={insertedJob.salary}

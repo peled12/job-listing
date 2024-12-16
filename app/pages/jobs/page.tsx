@@ -3,13 +3,9 @@ import { Job } from "../types";
 import { Suspense } from "react";
 import Loading from "./Loading";
 
-/*
-  TODO: fix access denied bug when fetching
-*/
-
 const Page = async () => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
-    cache: "no-store",
+    next: { revalidate: 30 },
   });
 
   const initJobs: Job[] = await response.json();

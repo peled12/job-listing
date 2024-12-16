@@ -32,6 +32,12 @@ const Container = ({ children }: { children: React.ReactNode }) => {
     const email = form.elements.namedItem("email") as HTMLInputElement;
     const password = form.elements.namedItem("password") as HTMLInputElement;
 
+    // make sure both email and password are inputed
+    if (!email.value || !password.value) {
+      alert("Please both email and password.");
+      return;
+    }
+
     // start the loader
     const loader = document.querySelector(".main-loader");
     loader?.classList.remove("hide");

@@ -61,6 +61,14 @@ const Page = () => {
     key: keyof JobType,
     newValue: JobType[keyof JobType]
   ): void => {
+    // make sure salary is a positive integer
+    if (
+      key === "salary" &&
+      newValue &&
+      ((newValue as number) <= 1 || !Number.isInteger(Number(newValue)))
+    )
+      return;
+
     setinsertedJob((prev) => {
       return { ...prev, [key]: newValue };
     });
@@ -75,32 +83,19 @@ const Page = () => {
     const loader = document.querySelector(".main-loader");
     loader?.classList.remove("hide");
 
-    const newUserJobsDraft = editingJobId
-      ? // if its editing, find the edited job and replace it
-        (user?.jobs_draft || []).map((listing) =>
-          listing.id === editingJobId ? insertedJob : listing
-        )
-      : // else just add to the beginning of the array the new job
-        [insertedJob, ...(user?.jobs_draft || [])];
-
     try {
-      const res = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/users/" + user?.id,
-        {
-          method: "PATCH",
-          // add the new job to the user's job draft
-          body: JSON.stringify({
-            jobs_draft: newUserJobsDraft,
-          }),
-        }
-      );
+      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
+        method: "POST",
+        // add the user id
+        body: JSON.stringify({ ...insertedJob, user_id: user?.id }),
+      });
 
       // throw error if needed
       if (!res.ok) throw new Error("Problem saving job.");
 
       // save user with the new data
       const newUser = { ...user! }; // use non-null assertion
-      newUser.jobs_draft = newUserJobsDraft;
+      newUser.jobs_draft.push(insertedJob);
       saveUser(newUser);
 
       navigateWithTransition({ url: "/pages/myListings" }); // navigate to the job listings

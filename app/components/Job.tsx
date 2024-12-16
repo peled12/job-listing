@@ -8,11 +8,6 @@ import { FaRegEyeSlash, FaRegHeart } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { HiXMark } from "react-icons/hi2";
 
-/*
-    TODO: fix the style bug when clicking view more
-    TODO: keep designing this
-*/
-
 // NOTE: if there is children, this component is from my_listings.
 // NOTE currentTime is new Date().getTime(). it exists if the component is rendered in myListings
 const Job = ({
@@ -162,7 +157,7 @@ const Job = ({
           <div className="flex gap-4 justify-between">
             <div>
               <div>
-                <p className="opacity-50 border-b border-slate-700 w-max mb-1">
+                <p className="opacity-50 border-b border-slate-700 w-max mb-1 pr-1">
                   Contact at: {job.contact}
                 </p>
                 <h2 className="text-3xl font-sans">{job.title}</h2>
@@ -173,7 +168,7 @@ const Job = ({
                   !job.company ? "opacity-0 cursor-default" : "opacity-50"
                 }
               >
-                {job.company || "Hi"}
+                {job.company || "Space filler"}
               </p>
             </div>
             <div className="flex gap-1 flex-wrap"></div>
@@ -194,8 +189,9 @@ const Job = ({
               <p>{job.experience}</p>
             </div>
           </div>
-          <div className="pt-6 flex-grow">{job.description}</div>
-          <div className="p-6 pt-0 flex-grow">{job.more_description}</div>
+          <div className="pt-6 flex-grow mb-3">{job.description}</div>
+          <div className="description-seperator"></div>
+          <div className="p-6 pt-0 mt-3 flex-grow">{job.more_description}</div>
           <button
             onClick={(e) => handleViewMore(e, "remove")}
             className="absolute top-2 right-2 rounded un-view-more"

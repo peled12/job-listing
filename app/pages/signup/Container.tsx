@@ -22,10 +22,6 @@ const USERNAME_REGEX = /^(?=.*[a-zA-Z]).{3,}$/;
 
 // regex to check if a password includes a capital letter, a number or a special character
 const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/;
-/*
-  TODO: test everything here
-  TODO: create a button to hide / show the password
-*/
 
 const Container = ({ children }: { children: React.ReactNode }) => {
   const { saveUser } = useUserContext();

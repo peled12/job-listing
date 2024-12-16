@@ -8,10 +8,6 @@ import {
 } from "../custom_hooks/NavigationTransition";
 import CustomSelect from "./CustomSelect";
 
-/*
-    TODO: fix bug the user setting could be opened after login
-*/
-
 const UserSettings = () => {
   const { user, saveUser } = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();

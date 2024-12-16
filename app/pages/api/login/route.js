@@ -1,31 +1,64 @@
-import getOneUser from "../lib/getOneUser";
+import { prisma } from "../lib/prisma";
 
-const TABLE = "users";
+async function getUserPwAndId(email) {
+  try {
+    const user = await prisma.users.findUnique({
+      where: { email }, // fetch user by email
+      select: { pw: true, id: true },
+    });
+
+    if (!user) throw { cause: "wrong email", status: 404 };
+
+    return user;
+  } catch (err) {
+    if (err && typeof err === "object") {
+      console.error("Error in getUserPassword:", err);
+    } else {
+      console.error("Unexpected error:", err);
+    }
+
+    // decide which error to throw
+
+    if (err.cause) throw err;
+
+    throw { cause: "Internal server error.", status: 500 };
+  }
+}
 
 // login check
 export async function POST(req) {
   const { email, password } = await req.json();
 
   try {
-    const query = `SELECT * FROM ${TABLE} WHERE email = ?`;
+    // get the user (only with password)
+    const userPasswordAndId = await getUserPwAndId(email);
 
-    // get the user
-    const user = await getOneUser(query, [email]);
+    // if the password is correct
+    if (userPasswordAndId.pw === password) {
+      try {
+        // get the user and return the data
+        const user = await prisma.users.findUnique({
+          where: { email }, // fetch user by email again
+          include: {
+            jobs_draft: {
+              where: {
+                user_id: userPasswordAndId.id,
+              },
+            },
+          },
+        });
 
-    // correct password, send the data to the client
-    if (user.pw === password) {
-      console.log("GOOD");
-
-      return new Response(JSON.stringify(user), {
-        status: 200,
-      });
+        return new Response(JSON.stringify(user), {
+          status: 200,
+        });
+      } catch (err) {
+        return new Response("Internal server error.", { status: 500 });
+      }
     }
 
     // else, wrong password. throw an error
     throw { cause: "wrong password", status: 401 };
   } catch (err) {
-    console.error(err.status);
-
     // send the corresponding message to the client
     return new Response(err.cause, {
       status: err.status,
