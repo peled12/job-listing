@@ -6,12 +6,9 @@ import Loading from "./Loading";
 const Page = async () => {
   console.log("API URL: " + process.env.NEXT_PUBLIC_API_URL);
 
-  const response = await fetch(
-    process.env.NEXT_PUBLIC_API_URL || "" + "/api/jobs",
-    {
-      next: { revalidate: 30 },
-    }
-  );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`, {
+    cache: "no-store", // Ensures fresh data every time
+  });
 
   const initJobs: Job[] = await response.json();
 
