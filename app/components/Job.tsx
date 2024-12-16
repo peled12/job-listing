@@ -43,7 +43,7 @@ const Job = ({
 
     // else, its active and return the time difference
     return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  }, [job]);
+  }, [job, currentTime]);
 
   const handleViewMore = (e: React.MouseEvent, action: string) => {
     const clickedElement = e.target as HTMLElement;
