@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import Loading from "./Loading";
 
 const Page = async () => {
+  console.log("API URL: " + process.env.NEXT_PUBLIC_API_URL);
+
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
     next: { revalidate: 30 },
   });
