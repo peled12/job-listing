@@ -12,6 +12,18 @@ const Page = async () => {
 
   const initJobs: Job[] = await response.json();
 
+  // Log the response status and content type to help diagnose issues
+  console.log("Response Status:", response.status);
+  console.log("Response Content-Type:", response.headers.get("Content-Type"));
+
+  // Check if the response is successful and is returning JSON
+  if (!response.ok) {
+    const errorText = await response.text(); // Log the error response body
+    console.error("Failed to fetch jobs, status code:", response.status);
+    console.error("Error body:", errorText);
+    throw new Error("Failed to fetch jobs");
+  }
+
   return (
     <Suspense fallback={<Loading />}>
       <h1 className="text-5xl m-8 mb-0">Jobs Listing</h1>
