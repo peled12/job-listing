@@ -18,15 +18,16 @@ const AllJobs = ({
 }) => {
   return (
     <div className="jobs">
-      {jobs.map((job, index) => (
-        <Job
-          key={index}
-          job={job}
-          hidden={hiddenArr.includes(job.id!)}
-          favorite={favoriteArr.includes(job.id!)}
-          handleChangeUserFilter={handleChangeUserFilter}
-        />
-      ))}
+      {jobs &&
+        jobs.map((job, index) => (
+          <Job
+            key={index}
+            job={job}
+            hidden={hiddenArr.includes(job.id!)}
+            favorite={favoriteArr.includes(job.id!)}
+            handleChangeUserFilter={handleChangeUserFilter}
+          />
+        ))}
     </div>
   );
 };
