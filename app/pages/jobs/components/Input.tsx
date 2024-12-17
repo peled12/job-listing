@@ -1,5 +1,5 @@
 import { JobType, ExperienceLevel, InputProps, Job } from "../../types";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Input = ({
