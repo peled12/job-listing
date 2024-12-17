@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserContext } from "../custom_hooks/UserContext";
+import { UserContextType, useUserContext } from "../custom_hooks/UserContext";
 
 import {
   CustomLink,
@@ -9,7 +9,7 @@ import {
 import CustomSelect from "./CustomSelect";
 
 const UserSettings = () => {
-  const { user, saveUser } = useUserContext();
+  const { user, saveUser }: UserContextType = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
 
   const logout = (): void => {

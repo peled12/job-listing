@@ -2,7 +2,10 @@
 
 import { FormEvent, useState } from "react";
 
-import { useUserContext } from "@/app/custom_hooks/UserContext";
+import {
+  UserContextType,
+  useUserContext,
+} from "@/app/custom_hooks/UserContext";
 import {
   useTransitionNavigate,
   useUrlState,
@@ -12,7 +15,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 
 const Container = ({ children }: { children: React.ReactNode }) => {
-  const { saveUser } = useUserContext();
+  const { saveUser }: UserContextType = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
 
   const state = useUrlState();

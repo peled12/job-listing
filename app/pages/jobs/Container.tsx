@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 
 import "./jobs.css";
@@ -32,10 +33,10 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
 
   // "filtering" arrays
   const [hiddenArr, sethiddenArr] = useState<string[]>(
-    user ? user.jobs_filter.hidden : []
+    user?.jobs_filter.hidden || []
   );
   const [favoriteArr, setfavoriteArr] = useState<string[]>(
-    user ? user.jobs_filter.favorite : []
+    user?.jobs_filter.favorite || []
   );
 
   const changeInput = (

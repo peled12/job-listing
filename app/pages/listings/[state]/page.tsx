@@ -11,14 +11,17 @@ import Job from "@/app/components/Job";
 
 import { v4 as uuid } from "uuid";
 
-import { useUserContext } from "@/app/custom_hooks/UserContext";
+import {
+  UserContextType,
+  useUserContext,
+} from "@/app/custom_hooks/UserContext";
 import {
   useTransitionNavigate,
   useUrlState,
 } from "@/app/custom_hooks/NavigationTransition";
 
 const Page = () => {
-  const { user, saveUser } = useUserContext();
+  const { user, saveUser }: UserContextType = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
 
   const editingJobId = useUrlState(); // the draft_id if its editing, null if not

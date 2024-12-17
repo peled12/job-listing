@@ -36,4 +36,5 @@ export type User =
       jobs_filter: { hidden: string[]; favorite: string[] };
       jobs_draft: Job[];
     }
-  | undefined;
+  | undefined
+  | null;

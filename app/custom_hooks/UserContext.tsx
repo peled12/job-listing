@@ -18,7 +18,7 @@ export const UserContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setuser] = useState<User>(undefined);
+  const [user, setuser] = useState<User | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("user-data");

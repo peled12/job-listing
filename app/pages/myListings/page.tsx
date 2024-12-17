@@ -6,7 +6,10 @@ import "./myListings.css";
 
 import Job from "@/app/components/Job";
 import { CustomLink } from "@/app/custom_hooks/NavigationTransition";
-import { useUserContext } from "@/app/custom_hooks/UserContext";
+import {
+  UserContextType,
+  useUserContext,
+} from "@/app/custom_hooks/UserContext";
 import { Job as JobType } from "../types";
 import { useState, useEffect } from "react";
 
@@ -17,7 +20,7 @@ type OperationType = "Publish" | "Extend" | "Republish" | "Delete";
 const toMilliseconds: number = 24 * 60 * 60 * 1000;
 
 const Page = () => {
-  const { user, saveUser } = useUserContext();
+  const { user, saveUser }: UserContextType = useUserContext();
 
   // initilize the current time
   const [currentTime, setcurrentTime] = useState<number>();
