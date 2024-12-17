@@ -1,5 +1,5 @@
 import { JobType, ExperienceLevel, InputProps, Job } from "../../types";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Input = ({
@@ -18,7 +18,7 @@ const Input = ({
   setfilteredJobs: React.Dispatch<React.SetStateAction<Job[]>>;
   initJobs: Job[];
 }) => {
-  const normalName = useRef(
+  const [normalName] = useState(
     name
       .split("_")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -88,7 +88,7 @@ const Input = ({
 
   return (
     <div className="input">
-      <h3 className="text-xl mb-3">{normalName.current}</h3>
+      <h3 className="text-xl mb-3">{normalName}</h3>
       {name === "experience_level" || name === "job_type" ? (
         <div className="relative">
           <MdKeyboardArrowDown className="custom-select-arrow" />
