@@ -16,8 +16,7 @@ import { Suspense } from "react";
 
 /*
   TODO: fix bug it takes a long time navigating
-  TODO: fix deployment and deploy to vercel
-  TODO: make it so the api is usable in production (in vercel)
+  TODO: test everything in production (in vercel)
 */
 
 export default function RootLayout({

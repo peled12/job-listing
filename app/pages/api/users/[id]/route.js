@@ -1,4 +1,4 @@
-import { executeQuery } from "../../lib/api";
+import { prisma } from "../../lib/prisma";
 
 // patch user
 export async function PATCH(req, context) {
@@ -16,26 +16,15 @@ export async function PATCH(req, context) {
     return new Response("No valid changes provided.", { status: 400 });
   }
 
-  // create the set clause
-  const setClause = Object.keys(changes)
-    .map((column) => `${column} = ?`) // each column will have a placeholder
-    .join(", ");
-
-  // prepare values
-  const valueParams = Object.values(changes);
-  valueParams.push(id); // Add the id at the end for the WHERE clause
-
-  const query = `
-    UPDATE users
-    SET ${setClause}
-    WHERE id = ?
-  `;
-
   try {
-    const data = await executeQuery(query, valueParams);
+    // update user in the database using Prisma
+    const updatedUser = await prisma.users.update({
+      where: { id: Number(id) }, // make sure the id is a number
+      data: changes, // this will update the fields passed in the body
+    });
 
-    // success
-    return new Response(JSON.stringify(data), { status: 200 });
+    // return the updated user data
+    return new Response(JSON.stringify(updatedUser), { status: 200 });
   } catch (err) {
     console.error(err);
 

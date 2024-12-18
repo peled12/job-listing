@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./jobs.css";
 
@@ -25,6 +25,10 @@ const initInputs: InputProps = {
   only_show_favorites: false,
 };
 
+/*
+  TODO: fix bug it gives an error initially if a user filter array isnt empty
+*/
+
 const Container = ({ initJobs }: { initJobs: Job[] }) => {
   const { user, saveUser }: UserContextType = useUserContext();
 
@@ -32,12 +36,21 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
   const [filteredJobs, setfilteredJobs] = useState<Job[]>(initJobs);
 
   // "filtering" arrays
-  const [hiddenArr, sethiddenArr] = useState<string[]>(
-    user?.jobs_filter.hidden || []
-  );
-  const [favoriteArr, setfavoriteArr] = useState<string[]>(
-    user?.jobs_filter.favorite || []
-  );
+  const [hiddenArr, sethiddenArr] = useState<string[]>([]);
+  const [favoriteArr, setfavoriteArr] = useState<string[]>([]);
+
+  // initialize them (wait for the client)
+  useEffect(() => {
+    if (user) {
+      sethiddenArr(user.jobs_filter.hidden);
+      setfavoriteArr(user.jobs_filter.favorite);
+
+      // initially, Show Hidden won't be checked. so filter the hidden ones out
+      setfilteredJobs(
+        initJobs.filter((job) => !user.jobs_filter.hidden.includes(job.id!))
+      );
+    }
+  }, []);
 
   const changeInput = (
     key: keyof InputProps,
@@ -213,9 +226,8 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
     <div className="jobs-container">
       <div className="w-full text-end mb-4">
         <CustomLink
-          url={user ? "/pages/listings/new" : "/pages/listings/new"}
+          url={user ? "/pages/listings/new" : "/pages/login"}
           className="custom-button h-max border !rounded-lg"
-          state={!user ? { nextRoute: "/pages/listings/new" } : undefined}
         >
           Create Listing
         </CustomLink>

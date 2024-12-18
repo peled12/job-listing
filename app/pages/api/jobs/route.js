@@ -58,8 +58,6 @@ export async function POST(req) {
 export async function DELETE(req) {
   const id = await req.text();
 
-  console.log(id);
-
   try {
     const result = await prisma.jobs.delete({
       where: {
