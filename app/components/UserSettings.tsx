@@ -39,10 +39,6 @@ const UserSettings = () => {
           Logout
         </button>
       </CustomSelect>
-      <div className="logout-container !hidden">
-        <p className="text-3xl p-5 font-sans">Logging Out</p>
-        <div className="main-loader !h-10 !w-10"></div>
-      </div>
     </>
   ) : (
     <CustomLink url="/pages/login" className="custom-button">

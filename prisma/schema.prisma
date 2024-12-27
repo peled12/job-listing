@@ -1,7 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// This is your Prisma schema file, 
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions? 
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
@@ -14,30 +13,28 @@ datasource db {
 }
 
 model Users {
-  id  Int @id @default(autoincrement())
-  username  String
-  pw  String
-  email String @unique
-  jobs_filter Json
-  jobs_draft Jobs[]
-
+  id            Int    @id @default(autoincrement())
+  username      String
+  pw            String
+  email         String @unique
+  jobs_filter   Json
+  jobs_draft    Jobs[] @relation("UserJobs")
   @@map("users")
 }
 
 model Jobs {
-  id  String @id
-  user_id Int
-  salary  Int
-  experience  String
-  location  String
-  job_type  String
-  title String
-  contact String
-  description String
-  company String
-  more_description  String
-  valid_through Int?
-  user  Users @relation(fields: [user_id], references: [id])
-
+  id             String  @id @default(uuid()) @db.Char(36)
+  user_id        Int
+  salary         Int
+  experience     String
+  location       String
+  job_type       String
+  title          String
+  contact        String
+  description    String
+  company        String
+  more_description String
+  valid_through  DateTime?
+  user           Users   @relation("UserJobs", fields: [user_id], references: [id])
   @@map("jobs")
 }

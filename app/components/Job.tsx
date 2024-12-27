@@ -8,20 +8,22 @@ import { FaRegEyeSlash, FaRegHeart } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { HiXMark } from "react-icons/hi2";
 
+import ReactMarkDown from "react-markdown";
+
 // NOTE: if there is children, this component is from my_listings.
-// NOTE currentTime is new Date().getTime(). it exists if the component is rendered in myListings
+// NOTE currentDate is new Date().getTime(). it exists if the component is rendered in myListings
 const Job = ({
   job,
   hidden,
   favorite,
-  currentTime,
+  currentDate,
   children,
   handleChangeUserFilter,
 }: {
   job: JobType;
   hidden: boolean;
   favorite: boolean;
-  currentTime?: number;
+  currentDate?: Date;
   children?: React.ReactNode;
   handleChangeUserFilter?: (
     jobId: string,
@@ -31,19 +33,22 @@ const Job = ({
 }) => {
   // this is if the job is active
   const jobState = useMemo<string | number | null>(() => {
-    if (!currentTime) return null; // jobState is not used then
+    if (!currentDate) return null; // jobState is not used then
 
+    // if the job isn't assigned a valid_through date, its a draft
     if (!job.valid_through) return "draft";
 
-    // job.valid_throgh is not undefined
-    const timeDiff = job.valid_through! - currentTime;
+    const validThroughDate = new Date(job.valid_through);
+
+    // job.valid_through is not undefined
+    const timeDiff = validThroughDate.getTime() - currentDate.getTime();
 
     // if the difference is nagative, the job is expired
     if (timeDiff < 0) return "expired";
 
     // else, its active and return the time difference
     return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  }, [job, currentTime]);
+  }, [job, currentDate]);
 
   const handleViewMore = (e: React.MouseEvent, action: string) => {
     const clickedElement = e.target as HTMLElement;
@@ -191,7 +196,9 @@ const Job = ({
           </div>
           <div className="pt-6 flex-grow mb-3">{job.description}</div>
           <div className="description-seperator"></div>
-          <div className="p-6 pt-0 mt-3 flex-grow">{job.more_description}</div>
+          <div className="p-6 pt-0 mt-3 flex-grow more-description-container">
+            <ReactMarkDown>{job.more_description}</ReactMarkDown>
+          </div>
           <button
             onClick={(e) => handleViewMore(e, "remove")}
             className="absolute top-2 right-2 rounded un-view-more"

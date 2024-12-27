@@ -1,12 +1,14 @@
 import { prisma } from "../lib/prisma";
 
-export async function GET() {
-  const currentTime = new Date().getTime();
+// TODO: fix all these:
 
+export async function GET() {
   try {
+    console.log(prisma);
+
     // fetch all active jobs
     const data = await prisma.jobs.findMany({
-      where: { valid_through: { gt: currentTime } },
+      where: { valid_through: { gt: new Date() } },
     });
 
     return new Response(JSON.stringify(data), {
@@ -43,9 +45,19 @@ export async function POST(req) {
       },
     });
 
-    return new Response(JSON.stringify({ job_result: jobResult }), {
-      status: 200,
-    });
+    const insertedId = jobResult.id;
+
+    console.log(insertedId);
+
+    return new Response(
+      JSON.stringify({
+        message: "Job created succsessfully",
+        inserted_id: insertedId,
+      }),
+      {
+        status: 201,
+      }
+    );
   } catch (err) {
     console.error(err);
 
@@ -55,8 +67,30 @@ export async function POST(req) {
   }
 }
 
+export async function PUT(req) {
+  const params = await req.json();
+
+  const { id, ...data } = params; // extract the id
+
+  try {
+    const result = await prisma.jobs.update({
+      where: { id },
+      data,
+    });
+
+    // successful put
+    return new Response(JSON.stringify(result), { status: 200 });
+  } catch (err) {
+    console.log(err);
+
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
+  }
+}
+
 export async function DELETE(req) {
-  const id = await req.text();
+  const { id } = await req.json();
 
   try {
     const result = await prisma.jobs.delete({

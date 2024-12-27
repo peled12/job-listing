@@ -20,7 +20,7 @@ export interface Job {
   title: string;
   contact: string;
   description: string;
-  valid_through?: number;
+  valid_through?: Date;
   more_description?: string;
   company?: string;
   hidden?: boolean; // for filtering

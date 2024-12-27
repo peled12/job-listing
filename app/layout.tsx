@@ -47,6 +47,10 @@ export default function RootLayout({
             <NavigationTransition>{children}</NavigationTransition>
           </Suspense>
         </UserContextProvider>
+        <div className="logout-container !hidden">
+          <p className="text-3xl p-5 font-sans">Logging Out</p>
+          <div className="main-loader !h-10 !w-10"></div>
+        </div>
       </body>
     </html>
   );

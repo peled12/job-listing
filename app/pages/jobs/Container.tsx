@@ -253,12 +253,16 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
           resetFiltering={resetFiltering}
         />
       </div>
-      <AllJobs
-        jobs={filteredJobs}
-        hiddenArr={hiddenArr}
-        favoriteArr={favoriteArr}
-        handleChangeUserFilter={handleChangeUserFilter}
-      />
+      {initJobs && filteredJobs.length ? (
+        <AllJobs
+          jobs={filteredJobs}
+          hiddenArr={hiddenArr}
+          favoriteArr={favoriteArr}
+          handleChangeUserFilter={handleChangeUserFilter}
+        />
+      ) : (
+        <p className="w-full mt-6 text-center text-xl">No jobs were found</p>
+      )}
     </div>
   );
 };

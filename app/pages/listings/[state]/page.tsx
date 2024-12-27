@@ -9,8 +9,6 @@ import { Job as JobType } from "../../types";
 import Inputs from "./components/Inputs";
 import Job from "@/app/components/Job";
 
-import { v4 as uuid } from "uuid";
-
 import {
   UserContextType,
   useUserContext,
@@ -19,6 +17,11 @@ import {
   useTransitionNavigate,
   useUrlState,
 } from "@/app/custom_hooks/NavigationTransition";
+
+/*
+  TODO: fix but about posting a job here is not working (logged schema has user, schema.prisma
+        doesnt as it should)
+*/
 
 const Page = () => {
   const { user, saveUser }: UserContextType = useUserContext();
@@ -46,7 +49,6 @@ const Page = () => {
           description: "",
           more_description: "",
           company: "",
-          id: uuid(),
         }
   );
 
@@ -68,7 +70,7 @@ const Page = () => {
     if (
       key === "salary" &&
       newValue &&
-      ((newValue as number) <= 1 || !Number.isInteger(Number(newValue)))
+      ((newValue as number) <= 0 || !Number.isInteger(Number(newValue)))
     )
       return;
 
@@ -80,26 +82,73 @@ const Page = () => {
   const saveJob = async (e: FormEvent) => {
     e.preventDefault();
 
-    // form validation occures automatically
+    // form validation automatically checks empty requiered fields
+
+    // trim the required fields
+    const newJob: JobType = { ...insertedJob };
+    newJob.title = newJob.title.trim();
+    newJob.location = newJob.location.trim();
+    newJob.contact = newJob.contact.trim();
+    newJob.description = newJob.description.trim();
+
+    // make sure all the required fields are filled out
+    if (
+      !newJob.title ||
+      !newJob.location ||
+      !newJob.contact ||
+      !newJob.description
+    ) {
+      alert("Please fill out all the required fields.");
+      return;
+    }
 
     // start the animation
     const loader = document.querySelector(".main-loader");
     loader?.classList.remove("hide");
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
-        method: "POST",
-        // add the user id
-        body: JSON.stringify({ ...insertedJob, user_id: user?.id }),
-      });
+      // handle edit save
+      if (editingJob) {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
+          method: "PUT",
+          // add the user id
+          body: JSON.stringify({ ...insertedJob, user_id: user?.id }),
+        });
 
-      // throw error if needed
-      if (!res.ok) throw new Error("Problem saving job.");
+        // throw error if needed
+        if (!res.ok) throw new Error("Problem saving job.");
 
-      // save user with the new data
-      const newUser = { ...user! }; // use non-null assertion
-      newUser.jobs_draft.push(insertedJob);
-      saveUser(newUser);
+        // save user with the new data
+        const newUser = { ...user! };
+        const index = newUser.jobs_draft.findIndex(
+          (job) => job.id === insertedJob.id
+        );
+        newUser.jobs_draft[index] = insertedJob;
+        saveUser(newUser);
+      }
+      // handle new job save
+      else {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
+          method: "POST",
+          // add the user id
+          body: JSON.stringify({ ...insertedJob, user_id: user?.id }),
+        });
+
+        // throw error if needed
+        if (!res.ok) throw new Error("Problem saving job.");
+
+        // get the inserted id
+        const { inserted_id: insertedId } = await res.json();
+
+        console.log(insertedId);
+
+        // save user with the new data
+        const newUser = { ...user! }; // use non-null assertion
+        newUser.jobs_draft.push({ ...insertedJob, id: insertedId }); // add the new id as well
+        saveUser(newUser);
+
+        console.log(newUser);
+      }
 
       navigateWithTransition({ url: "/pages/myListings" }); // navigate to the job listings
     } catch (err) {

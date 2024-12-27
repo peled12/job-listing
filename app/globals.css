@@ -222,7 +222,7 @@ textarea,
 }
 
 .logout-container {
-  position: absolute;
+  position: fixed;
   top: 50vh;
   left: 50vw;
   translate: -50% -50%;
@@ -235,6 +235,7 @@ textarea,
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 10001;
 }
 
 .dark-mode .logout-container {

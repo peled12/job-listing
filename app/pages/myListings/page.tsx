@@ -11,7 +11,7 @@ import {
   useUserContext,
 } from "@/app/custom_hooks/UserContext";
 import { Job as JobType } from "../types";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { HiXMark } from "react-icons/hi2";
 import CustomSelect from "@/app/components/CustomSelect";
@@ -22,10 +22,11 @@ const toMilliseconds: number = 24 * 60 * 60 * 1000;
 const Page = () => {
   const { user, saveUser }: UserContextType = useUserContext();
 
-  // initilize the current time
-  const [currentTime, setcurrentTime] = useState<number>();
+  // initilize the current date
+  const [currentDate, setcurrentDate] = useState<Date>();
   useEffect(() => {
-    setcurrentTime(new Date().getTime());
+    const date = new Date();
+    setcurrentDate(date);
   }, []);
 
   // states to handle the confirm action pop-up
@@ -41,14 +42,16 @@ const Page = () => {
     extraDays: number,
     operation: OperationType
   ): Promise<void> => {
+    if (!currentDate) return; // client isn't ready yet
+
     // method to update the valid through property and save the user
-    const customSaveUser = (newTime: number): void => {
+    const customSaveUser = (newDate: Date): void => {
       const newUser = { ...user! };
 
       // update the changed job
       newUser.jobs_draft = newUser.jobs_draft?.map((listingObj) =>
         listingObj.id === listing.id
-          ? { ...listingObj, valid_through: newTime }
+          ? { ...listingObj, valid_through: newDate } // update the valid_through property
           : listingObj
       );
 
@@ -60,21 +63,20 @@ const Page = () => {
     loader?.classList.remove("hide");
 
     try {
-      const currentTime = new Date().getTime(); // get currentTime again to get the new time
+      const currentDateTime = currentDate.getTime(); // get currentDateTime again to get the new time
       const extraTime = extraDays * toMilliseconds;
 
       // switch between operations
       switch (operation) {
         case "Publish": {
-          const newTime = currentTime + extraTime;
+          const newDate = new Date(currentDateTime + extraTime);
 
           const response = await fetch(
             process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
-                ...listing,
-                new_time: newTime,
+                new_time: newDate,
                 id: listing.id,
               }),
             }
@@ -83,19 +85,21 @@ const Page = () => {
           // throw error if failed
           if (!response.ok) throw new Error("Problem posting job.");
 
-          customSaveUser(newTime); // successfull request; update the user
+          customSaveUser(newDate); // successfull request; update the user
 
           break;
         }
         case "Extend": {
-          const newTime = listing.valid_through! + extraTime;
+          const newDate = new Date(
+            listing.valid_through!.getTime() + extraTime
+          );
 
           const response = await fetch(
             process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
-                new_time: newTime,
+                new_time: newDate,
                 id: listing.id,
               }),
             }
@@ -104,19 +108,19 @@ const Page = () => {
           // throw error if failed
           if (!response.ok) throw new Error("Failed to extend job.");
 
-          customSaveUser(newTime); // successfull request; update the user
+          customSaveUser(newDate); // successfull request; update the user
 
           break;
         }
         case "Republish": {
-          const newTime = currentTime + extraTime;
+          const newDate = new Date(currentDateTime + extraTime);
 
           const response = await fetch(
             process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
-                new_time: newTime,
+                new_time: newDate,
                 id: listing.id,
               }),
             }
@@ -125,7 +129,7 @@ const Page = () => {
           // throw error if failed
           if (!response.ok) throw new Error("Failed to republish job.");
 
-          customSaveUser(newTime); // successfull request; update the user
+          customSaveUser(newDate); // successfull request; update the user
 
           break;
         }
@@ -153,7 +157,7 @@ const Page = () => {
         process.env.NEXT_PUBLIC_API_URL + "/api/jobs",
         {
           method: "DELETE",
-          body: id,
+          body: JSON.stringify({ id }),
         }
       );
 
@@ -236,24 +240,24 @@ const Page = () => {
       </button>
     </CustomSelect>
   );
+
   return (
     <>
       <h1 className="m-4 p-4 text-4xl">My Listings</h1>
-      <div className="my-listings-container">
-        {currentTime &&
-          user?.jobs_draft &&
-          user.jobs_draft.map((listing, index) => (
+      {currentDate && user && user!.jobs_draft.length ? (
+        <div className="my-listings-container">
+          {user!.jobs_draft.map((listing, index) => (
             <Job
               job={listing}
               hidden={false}
               favorite={false}
               key={index}
-              currentTime={currentTime}
+              currentDate={currentDate}
             >
               <div className="buttons flex flex-row-reverse gap-x-1 p-3">
                 {!listing.valid_through
                   ? actionButton(listing, "Publish")
-                  : currentTime < listing.valid_through
+                  : currentDate < listing.valid_through
                   ? actionButton(listing, "Extend")
                   : actionButton(listing, "Republish")}
                 <CustomLink
@@ -272,7 +276,12 @@ const Page = () => {
               </div>
             </Job>
           ))}
-      </div>
+        </div>
+      ) : (
+        <p className="w-full text-center italic text-xl mt-6">
+          You don't have any listings.
+        </p>
+      )}
       {actionParams && (
         <div className="all-wrapper" onClick={(e) => handleConfirm(false, e)}>
           <div className="confirmation p-6 rounded-lg flex flex-col relative">

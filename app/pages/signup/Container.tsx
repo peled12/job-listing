@@ -125,7 +125,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
       const data = await res.json();
 
       saveUser({ ...newUser, id: data.inserted_id });
-      navigateWithTransition({ url: "pages/jobs" });
+      navigateWithTransition({ url: "/pages/jobs" });
     } catch (err) {
       console.error((err as Error).message);
 

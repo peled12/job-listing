@@ -66,6 +66,7 @@ const Inputs = ({
             value={insertedJob.job_type}
             onChange={(e) => handleChange("job_type", e.target.value)}
           >
+            <option value="Any">Any</option>
             <option value="Full Time">Full Time</option>
             <option value="Part Time">Part Time</option>
             <option value="Internship">Internship</option>
@@ -82,6 +83,7 @@ const Inputs = ({
             value={insertedJob.experience}
             onChange={(e) => handleChange("experience", e.target.value)}
           >
+            <option value="Any">Any</option>
             <option value="Junior">Junior</option>
             <option value="Mid-Level">Mid-Level</option>
             <option value="Senior">Senior</option>
@@ -94,7 +96,7 @@ const Inputs = ({
           className="mt-3 rounded h-10 text-base px-3"
           id="salary"
           type="number"
-          min={1}
+          min={0}
           step={1}
           onChange={(e) => handleChange("salary", e.target.value)}
           required
@@ -122,6 +124,7 @@ const Inputs = ({
           onChange={(e) => handleChange("more_description", e.target.value)}
           value={insertedJob.more_description}
         />
+        <p className="opacity-50 mt-2 text-base">Supports full markdown</p>
       </div>
     </div>
   );
