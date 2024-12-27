@@ -203,7 +203,7 @@ const Job = ({
           </div>
           <div className="pt-6 flex-grow mb-3">{job.description}</div>
           <div className="description-seperator"></div>
-          <div className="p-6 pt-0 mt-3 flex-grow more-description-container">
+          <div className="px-6 pt-0 mt-3 flex-grow more-description-container">
             <MarkDownComponent text={job.more_description} />
           </div>
           <button

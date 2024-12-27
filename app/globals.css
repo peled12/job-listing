@@ -440,6 +440,11 @@ textarea,
 }
 
 /* for react markdown */
+
+.job .more-description-container {
+  opacity: 0.8;
+}
+
 .job .more-description-container h1 {
   font-size: 1.75em;
   font-weight: 500;
@@ -467,6 +472,7 @@ textarea,
 
 .job .more-description-container p {
   font-size: 1.05em;
+  margin-bottom: 20px;
 }
 
 .job .more-description-container ol {

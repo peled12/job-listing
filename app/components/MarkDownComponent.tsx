@@ -1,4 +1,6 @@
 import ReactMarkDown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 
 const MarkDownComponent = ({ text }: { text: string | undefined }) => {
   const handleImageRender = (props: { src?: string; alt?: string }) => {
@@ -14,7 +16,10 @@ const MarkDownComponent = ({ text }: { text: string | undefined }) => {
   };
 
   return (
-    <ReactMarkDown components={{ img: handleImageRender }}>
+    <ReactMarkDown
+      components={{ img: handleImageRender }}
+      remarkPlugins={[remarkGfm, remarkBreaks]}
+    >
       {text}
     </ReactMarkDown>
   );
