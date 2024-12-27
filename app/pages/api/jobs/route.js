@@ -1,7 +1,5 @@
 import { prisma } from "../lib/prisma";
 
-// TODO: fix all these:
-
 export async function GET() {
   try {
     console.log(prisma);

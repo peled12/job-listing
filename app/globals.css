@@ -365,11 +365,11 @@ textarea,
   padding: 20px;
   opacity: 1;
   background-color: #fbfbfb;
-  animation: fade-in 0.2s 0.1s forwards;
+  animation: fade-in 0.2s forwards;
 }
 
 .fade-out {
-  animation: fade-out 0.2s 0.1s forwards !important;
+  animation: fade-out 0.2s forwards !important;
 }
 
 @keyframes fade-in {

@@ -1,6 +1,6 @@
 import { Job as JobType } from "../pages/types";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { PiMoneyLight, PiGraduationCap } from "react-icons/pi";
 import { SlCalender } from "react-icons/sl";
@@ -52,7 +52,21 @@ const Job = ({
     return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
   }, [job, currentDate]);
 
-  const handleViewMore = (e: React.MouseEvent, action: string) => {
+  // this is for the view more functionality
+  const [activeJob, setactiveJob] = useState<JobType | null>(null);
+
+  const handleViewMore = async (
+    e: React.MouseEvent,
+    action: string,
+    type: string
+  ): Promise<void> => {
+    // show or hide the view more component
+    if (type === "show") setactiveJob(job);
+    else if (type === "hide") setTimeout(() => setactiveJob(null), 200); // wait for the animation
+
+    // animation feature + wait for the state to change
+    await new Promise<void>((resolve) => setTimeout(resolve, 100));
+
     const clickedElement = e.target as HTMLElement;
 
     if (
@@ -153,7 +167,7 @@ const Job = ({
         <div className="p-6 pt-0 flex gap-2 items-stretch justify-end">
           <button
             className="view-more-btn"
-            onClick={(e) => handleViewMore(e, "remove")}
+            onClick={(e) => handleViewMore(e, "remove", "show")}
           >
             View More
           </button>
@@ -161,59 +175,68 @@ const Job = ({
         {children && children}
       </div>
 
-      <div
-        className="all-wrapper !hidden"
-        onClick={(e) => handleViewMore(e, "add")}
-      >
-        <div className="job job-more relative flex flex-col transition-opacity duration-500 p-5">
-          <div className="flex gap-4 justify-between">
-            <div>
-              <div>
-                <p className="opacity-50 border-b border-slate-700 w-max mb-1 pr-1">
-                  Contact at: {job.contact}
-                </p>
-                <h2 className="text-3xl font-sans">{job.title}</h2>
-              </div>
-              <p className="opacity-50">{job.location}</p>
-              <p
-                className={
-                  !job.company ? "opacity-0 cursor-default" : "opacity-50"
-                }
-              >
-                {job.company || "Space filler"}
-              </p>
-            </div>
-            <div className="flex gap-1 flex-wrap"></div>
-          </div>
-          <div className="flex gap-1">
-            {job.salary && (
-              <div className="job-tag items-center rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors dark:border-slate-100 text-slate-900 dark:text-slate-50 flex gap-1 whitespace-nowrap w-max">
-                <PiMoneyLight className="h-4 w-4" />
-                <p>${job.salary.toLocaleString("en-US")}</p>
-              </div>
-            )}
-            <div className="job-tag items-center rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors dark:border-slate-100 text-slate-900 dark:text-slate-50 flex gap-1 whitespace-nowrap w-max">
-              <SlCalender />
-              <p>{job.job_type}</p>
-            </div>
-            <div className="job-tag items-center rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors dark:border-slate-100 text-slate-900 dark:text-slate-50 flex gap-1 whitespace-nowrap w-max">
-              <PiGraduationCap />
-              <p>{job.experience}</p>
-            </div>
-          </div>
-          <div className="pt-6 flex-grow mb-3">{job.description}</div>
-          <div className="description-seperator"></div>
-          <div className="px-6 pt-0 mt-3 flex-grow more-description-container">
-            <MarkDownComponent text={job.more_description} />
-          </div>
-          <button
-            onClick={(e) => handleViewMore(e, "remove")}
-            className="absolute top-2 right-2 rounded un-view-more"
+      {
+        // if the job is active, show the view more component
+        activeJob && (
+          <div
+            className="all-wrapper !hidden"
+            onClick={(e) => handleViewMore(e, "add", "hide")}
           >
-            <HiXMark className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
+            <div className="job job-more relative flex flex-col transition-opacity duration-500 p-5">
+              <div className="flex gap-4 justify-between">
+                <div>
+                  <div>
+                    <p className="opacity-50 border-b border-slate-700 w-max mb-3 pr-1">
+                      Contact at: {activeJob.contact}
+                    </p>
+                    <h2 className="text-3xl font-sans mb-1">
+                      {activeJob.title}
+                    </h2>
+                  </div>
+                  <p className="opacity-50">{activeJob.location}</p>
+                  <p
+                    className={
+                      !activeJob.company
+                        ? "opacity-0 cursor-default"
+                        : "opacity-50"
+                    }
+                  >
+                    {activeJob.company || "Space filler"}
+                  </p>
+                </div>
+                <div className="flex gap-1 flex-wrap"></div>
+              </div>
+              <div className="flex gap-1 mt-2">
+                {activeJob.salary && (
+                  <div className="job-tag items-center rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors dark:border-slate-100 text-slate-900 dark:text-slate-50 flex gap-1 whitespace-nowrap w-max">
+                    <PiMoneyLight className="h-4 w-4" />
+                    <p>${activeJob.salary.toLocaleString("en-US")}</p>
+                  </div>
+                )}
+                <div className="job-tag items-center rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors dark:border-slate-100 text-slate-900 dark:text-slate-50 flex gap-1 whitespace-nowrap w-max">
+                  <SlCalender />
+                  <p>{activeJob.job_type}</p>
+                </div>
+                <div className="job-tag items-center rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors dark:border-slate-100 text-slate-900 dark:text-slate-50 flex gap-1 whitespace-nowrap w-max">
+                  <PiGraduationCap />
+                  <p>{activeJob.experience}</p>
+                </div>
+              </div>
+              <div className="pt-6 flex-grow mb-3">{activeJob.description}</div>
+              <div className="description-seperator"></div>
+              <div className="px-6 pt-0 mt-3 flex-grow more-description-container">
+                <MarkDownComponent text={activeJob.more_description} />
+              </div>
+              <button
+                onClick={(e) => handleViewMore(e, "remove", "hide")}
+                className="absolute top-2 right-2 rounded un-view-more"
+              >
+                <HiXMark className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        )
+      }
     </>
   );
 };

@@ -73,6 +73,12 @@ const Input = ({
 
   // method to choose which filter method is needed by the name of the input
   const callInputchange = (newValue: string | number): void => {
+    if (!document.querySelector(".main-loader")?.classList.contains("hide")) {
+      // if the loader is still running, don't do anything
+      alert("Please wait for the current action to finish.");
+      return;
+    }
+
     switch (name) {
       case "title":
         handleChangeTitle(newValue as string);
@@ -82,6 +88,12 @@ const Input = ({
         break;
       case "minimum_salary":
         handleChangeSalary(newValue as number);
+        break;
+      case "experience_level":
+        handleChangeExprienceLevel(newValue as ExperienceLevel);
+        break;
+      case "job_type":
+        handleChangeJobType(newValue as JobType);
         break;
     }
   };
@@ -96,8 +108,8 @@ const Input = ({
             className="custom-select select rounded w-full h-10 text-lg px-3"
             onChange={(e) =>
               name === "job_type"
-                ? handleChangeJobType(e.target.value as JobType)
-                : handleChangeExprienceLevel(e.target.value as ExperienceLevel)
+                ? callInputchange(e.target.value as JobType)
+                : callInputchange(e.target.value as ExperienceLevel)
             }
           >
             <option value="Any">Any</option>

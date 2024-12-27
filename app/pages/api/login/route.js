@@ -1,7 +1,5 @@
 import { prisma } from "../lib/prisma";
 
-// TODO: fix login
-
 async function getUserPwAndId(email) {
   try {
     const user = await prisma.users.findUnique({

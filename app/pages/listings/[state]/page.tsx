@@ -18,11 +18,6 @@ import {
   useUrlState,
 } from "@/app/custom_hooks/NavigationTransition";
 
-/*
-  TODO: fix but about posting a job here is not working (logged schema has user, schema.prisma
-        doesnt as it should)
-*/
-
 const Page = () => {
   const { user, saveUser }: UserContextType = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();

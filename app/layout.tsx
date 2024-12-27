@@ -14,11 +14,6 @@ import UserSettings from "./components/UserSettings";
 import "./globals.css";
 import { Suspense } from "react";
 
-/*
-  TODO: fix bug it takes a long time navigating
-  TODO: test everything in production (in vercel)
-*/
-
 export default function RootLayout({
   children,
 }: Readonly<{

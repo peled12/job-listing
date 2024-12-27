@@ -25,10 +25,6 @@ const initInputs: InputProps = {
   only_show_favorites: false,
 };
 
-/*
-  TODO: fix bug it gives an error initially if a user filter array isnt empty
-*/
-
 const Container = ({ initJobs }: { initJobs: Job[] }) => {
   const { user, saveUser }: UserContextType = useUserContext();
 
