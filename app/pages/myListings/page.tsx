@@ -279,7 +279,7 @@ const Page = () => {
         </div>
       ) : (
         <p className="w-full text-center italic text-xl mt-6">
-          You don't have any listings.
+          You don&apos;t have any listings.
         </p>
       )}
       {actionParams && (

@@ -41,7 +41,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
 
   // initialize them (wait for the client)
   useEffect(() => {
-    if (user) {
+    if (user && initJobs) {
       sethiddenArr(user.jobs_filter.hidden);
       setfavoriteArr(user.jobs_filter.favorite);
 
@@ -50,7 +50,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
         initJobs.filter((job) => !user.jobs_filter.hidden.includes(job.id!))
       );
     }
-  }, []);
+  }, [initJobs, user]);
 
   const changeInput = (
     key: keyof InputProps,
