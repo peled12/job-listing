@@ -261,7 +261,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
           handleChangeUserFilter={handleChangeUserFilter}
         />
       ) : (
-        <p className="w-full mt-6 text-center text-xl">No jobs were found</p>
+        <p className="w-full mt-10 text-center text-xl">No jobs were found</p>
       )}
     </div>
   );
