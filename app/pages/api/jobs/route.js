@@ -31,7 +31,7 @@ export async function POST(req) {
     const jobResult = await prisma.jobs.create({
       data: {
         id: params.id,
-        salary: params.salary,
+        salary: Number(params.salary),
         experience: params.experience,
         location: params.location,
         job_type: params.job_type,

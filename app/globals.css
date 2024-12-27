@@ -438,3 +438,38 @@ textarea,
   background-color: rgb(248, 250, 252);
   color: rgb(15, 23, 42);
 }
+
+/* for react markdown */
+.job .more-description-container h1 {
+  font-size: 1.75em;
+  font-weight: 500;
+}
+
+.job .more-description-container ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.job .more-description-container li {
+  font-size: 1.05em;
+}
+
+.job .more-description-container a {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.job .more-description-container a:hover,
+.job .more-description-container a:focus {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.job .more-description-container p {
+  font-size: 1.05em;
+}
+
+.job .more-description-container ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}

@@ -8,7 +8,9 @@ import { FaRegEyeSlash, FaRegHeart } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { HiXMark } from "react-icons/hi2";
 
-import ReactMarkDown from "react-markdown";
+import MarkDownComponent from "./MarkDownComponent";
+
+type FilterType = "hidden" | "favorite";
 
 // NOTE: if there is children, this component is from my_listings.
 // NOTE currentDate is new Date().getTime(). it exists if the component is rendered in myListings
@@ -27,7 +29,7 @@ const Job = ({
   children?: React.ReactNode;
   handleChangeUserFilter?: (
     jobId: string,
-    filter: "hidden" | "favorite",
+    filter: FilterType,
     addFilter: boolean
   ) => Promise<void>;
 }) => {
@@ -74,6 +76,11 @@ const Job = ({
     }
   };
 
+  const handleChange = (type: FilterType, addFilter: boolean): void => {
+    if (handleChangeUserFilter)
+      handleChangeUserFilter(job.id!, type, addFilter);
+  };
+
   return (
     <>
       <div className="flex flex-col job">
@@ -103,23 +110,23 @@ const Job = ({
               <div className="flex gap-3 icons">
                 {hidden ? (
                   <IoEyeOutline
-                    onClick={() =>
-                      handleChangeUserFilter!(job.id!, "hidden", false)
-                    }
+                    className={!handleChangeUserFilter ? "!cursor-default" : ""}
+                    onClick={() => handleChange("hidden", false)}
                   />
                 ) : (
                   <FaRegEyeSlash
-                    onClick={() =>
-                      handleChangeUserFilter!(job.id!, "hidden", true)
-                    }
+                    className={!handleChangeUserFilter ? "!cursor-default" : ""}
+                    onClick={() => handleChange("hidden", true)}
                   />
                 )}
                 <FaRegHeart
-                  className={favorite ? "red" : ""}
+                  className={`${favorite ? "red" : ""} ${
+                    !handleChangeUserFilter ? "!cursor-default" : ""
+                  }`}
                   onClick={() =>
                     favorite
-                      ? handleChangeUserFilter!(job.id!, "favorite", false)
-                      : handleChangeUserFilter!(job.id!, "favorite", true)
+                      ? handleChange("favorite", false)
+                      : handleChange("favorite", true)
                   }
                 />
               </div>
@@ -197,7 +204,7 @@ const Job = ({
           <div className="pt-6 flex-grow mb-3">{job.description}</div>
           <div className="description-seperator"></div>
           <div className="p-6 pt-0 mt-3 flex-grow more-description-container">
-            <ReactMarkDown>{job.more_description}</ReactMarkDown>
+            <MarkDownComponent text={job.more_description} />
           </div>
           <button
             onClick={(e) => handleViewMore(e, "remove")}

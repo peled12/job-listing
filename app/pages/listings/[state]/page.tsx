@@ -128,6 +128,9 @@ const Page = () => {
       }
       // handle new job save
       else {
+        console.log(user);
+        console.log(user?.id);
+
         const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
           method: "POST",
           // add the user id

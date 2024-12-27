@@ -107,7 +107,7 @@ const Inputs = ({
       <div className="input sm:col-span-2">
         <p>Short Description *</p>
         <textarea
-          className="mt-3 rounded h-10 text-base px-3 py-1"
+          className="mt-3 rounded h-[100px] text-base px-3 py-1"
           id="short-description"
           onChange={(e) => handleChange("description", e.target.value)}
           maxLength={200}
@@ -119,7 +119,7 @@ const Inputs = ({
       <div className="input sm:col-span-3">
         <p>Full Description</p>
         <textarea
-          className="mt-3 rounded h-10 text-base px-3 py-1"
+          className="mt-3 rounded h-[120px] text-base px-3 py-1"
           id="full-description"
           onChange={(e) => handleChange("more_description", e.target.value)}
           value={insertedJob.more_description}
