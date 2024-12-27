@@ -91,7 +91,7 @@ const Page = () => {
         }
         case "Extend": {
           const newDate = new Date(
-            listing.valid_through!.getTime() + extraTime
+            new Date(listing.valid_through!).getTime() + extraTime
           );
 
           const response = await fetch(
@@ -188,6 +188,12 @@ const Page = () => {
     extraDays: number,
     operation: OperationType
   ) => {
+    if (!document.querySelector(".main-loader")?.classList.contains("hide")) {
+      // if the loader is still running, don't do anything
+      alert("Please wait for the current action to finish.");
+      return;
+    }
+
     setactionParams({
       listing: listing,
       extraDays: extraDays,
@@ -257,9 +263,9 @@ const Page = () => {
               <div className="buttons flex flex-row-reverse gap-x-1 p-3">
                 {!listing.valid_through
                   ? actionButton(listing, "Publish")
-                  : currentDate < listing.valid_through
-                  ? actionButton(listing, "Extend")
-                  : actionButton(listing, "Republish")}
+                  : currentDate > listing.valid_through
+                  ? actionButton(listing, "Republish")
+                  : actionButton(listing, "Extend")}
                 <CustomLink
                   url="/pages/listings/edit"
                   className="custom-button border"

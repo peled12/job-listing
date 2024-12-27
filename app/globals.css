@@ -453,6 +453,7 @@ textarea,
 .job .more-description-container ul {
   list-style-type: disc;
   padding-left: 20px;
+  margin-bottom: 20px;
 }
 
 .job .more-description-container li {
@@ -478,4 +479,5 @@ textarea,
 .job .more-description-container ol {
   list-style-type: decimal;
   padding-left: 20px;
+  margin-bottom: 20px;
 }
