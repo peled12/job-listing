@@ -19,6 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <title>Job Listing</title>
       <body>
         <UserContextProvider>
           <div className="navbar-filler">HI</div>
