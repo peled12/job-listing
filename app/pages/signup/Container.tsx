@@ -26,6 +26,10 @@ const USERNAME_REGEX = /^(?=.*[a-zA-Z]).{3,}$/;
 // regex to check if a password includes a capital letter, a number or a special character
 const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/;
 
+/*
+  TODO: fix problem signing up not working on vercel
+*/
+
 const Container = ({ children }: { children: React.ReactNode }) => {
   const { saveUser }: UserContextType = useUserContext();
   const { navigateWithTransition } = useTransitionNavigate();
@@ -71,6 +75,8 @@ const Container = ({ children }: { children: React.ReactNode }) => {
       setrepeatPasswordErr("The passwords you entered must be identical.");
       validSignUp = false;
     } else setrepeatPasswordErr("");
+
+    setinternalError(false); // also reset the internal error
 
     return validSignUp;
   };
@@ -118,7 +124,11 @@ const Container = ({ children }: { children: React.ReactNode }) => {
         body: JSON.stringify(newUser),
       });
 
-      if (!res.ok) throw new Error("Couldn't create user");
+      if (!res.ok) {
+        const errorData = await res.json();
+
+        throw new Error(errorData.message);
+      }
 
       // success creating a user. update the user and navigate back to jobs
 
@@ -127,9 +137,11 @@ const Container = ({ children }: { children: React.ReactNode }) => {
       saveUser({ ...newUser, id: data.inserted_id });
       navigateWithTransition({ url: "/pages/jobs" });
     } catch (err) {
-      console.error((err as Error).message);
+      const errorMessage = (err as Error).message;
 
-      setinternalError(true);
+      if (errorMessage === "Email already exists")
+        setemailErr("A user with this email already exists.");
+      else setinternalError(true);
     } finally {
       loader?.classList.add("hide"); // end the animation
     }

@@ -3,8 +3,6 @@ import { prisma } from "../lib/prisma";
 export async function PATCH(req) {
   const { new_time, id } = await req.json();
 
-  console.log(prisma);
-
   try {
     // update the job's valid_through
     const jobUpdateResult = await prisma.jobs.update({

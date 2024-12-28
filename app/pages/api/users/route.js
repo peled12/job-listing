@@ -10,6 +10,19 @@ export async function POST(req) {
   }
 
   try {
+    // check if email or username already exists
+    const existingUser = await prisma.users.findFirst({
+      where: {
+        email: params.email,
+      },
+    });
+
+    if (existingUser) {
+      return new Response(JSON.stringify({ message: "Email already exists" }), {
+        status: 400,
+      });
+    }
+
     // create a new user in the database using Prisma
     const newUser = await prisma.users.create({
       data: {
@@ -27,7 +40,7 @@ export async function POST(req) {
   } catch (err) {
     console.error(err);
 
-    return new Response(JSON.stringify({ error: err.message }), {
+    return new Response(JSON.stringify({ message: "Internal server error." }), {
       status: 500,
     });
   }
