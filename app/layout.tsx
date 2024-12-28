@@ -1,5 +1,3 @@
-// The template for this project: https://react-simplified-job-board.netlify.app/jobs
-
 import Clock from "./components/Clock";
 import DarkMode from "./components/DarkMode";
 
