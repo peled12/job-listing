@@ -41,5 +41,5 @@ If you'd like to explore this larger project, please visit:
 
 ## Feedback
 Feel free to provide any feedback or suggestions on this project. I'm always looking to improve and grow as a developer!
----
+***
 Thank you for taking the time to review my work. I look forward to the opportunity to contribute to your team!
