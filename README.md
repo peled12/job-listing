@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Project
 
-## Getting Started
+This is one of my smaller projects built using [Next.js](https://nextjs.org/). It demonstrates my skills and experience as a full-stack developer, particularly with:
+- **Next.js** for server-side rendering and dynamic routing.
+- **MySQL** with **Prisma** as the ORM for efficient database interactions.
+- **TypeScript** on the client side for type safety and maintainability.
 
-First, run the development server:
+## Deployment
+The project is deployed and hosted on [Vercel](https://vercel.com/), ensuring fast load times and a reliable experience. You can check out the live version of this project here:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**[Live Demo](https://your-vercel-link.com)**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## About
+While this project showcases my proficiency with Next.js, TypeScript, and MySQL, it is one of my smaller-scale efforts. I have a much larger project that demonstrates more complex functionality and my full range of skills as a full-stack developer.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Getting Started
+To run the project locally, follow these steps:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/peled12/job-listing
+2. Navigate to the project directory
+   ```bash
+   cd job-listing
+3. install dependencies:
+   ```bash
+   npm install
+4. start the deployment server
+   ```bash
+   npm run dev
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
-## Learn More
+## My Larger Project:
+My other project is a much more comprehensive application where I:
+- Used Create React App (CRA) for the frontend, written in JavaScript.
+- Built the backend with Node.js and MongoDB.
+- Designed and implemented complex features to handle data-rich interactions and user experiences.
+If you'd like to explore this larger project, please visit:
+[The Bucks fan page](https://github.com/peled12/bucks-fan-page)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Feedback
+Feel free to provide any feedback or suggestions on this project. I'm always looking to improve and grow as a developer!
+***
+Thank you for taking the time to review my work. I look forward to the opportunity to contribute to your team!
