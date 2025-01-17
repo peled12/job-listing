@@ -12,6 +12,10 @@ import UserSettings from "./components/UserSettings";
 import "./globals.css";
 import { Suspense } from "react";
 
+/*
+  TODO: switch to mongoDB or Postgres cause using mysql isnt free
+*/
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -3,12 +3,19 @@ import { Job } from "../types";
 import { Suspense } from "react";
 import Loading from "../../Loading";
 
-const Page = async () => {
+const fetchJobs = async (): Promise<Job[]> => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
-    cache: "no-store",
+    next: { revalidate: 20 }, // revalidate the page every 20 seconds
   });
+  if (!response.ok) {
+    throw new Error("Failed to fetch jobs");
+  }
+  return response.json();
+};
 
-  const initJobs: Job[] = await response.json();
+const Page = async () => {
+  // fetch jobs
+  const initJobs = await fetchJobs();
 
   return (
     <Suspense fallback={<Loading />}>
