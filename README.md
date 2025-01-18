@@ -8,7 +8,7 @@ This is one of my smaller projects built using [Next.js](https://nextjs.org/). I
 ## Deployment
 The project is deployed and hosted on [Vercel](https://vercel.com/), ensuring fast load times and a reliable experience. You can check out the live version of this project here:
 
-**[Live Demo](https://your-vercel-link.com)**
+**[Try it yourself](https://your-vercel-link.com)**
 
 ## About
 While this project showcases my proficiency with Next.js, TypeScript, and MySQL, it is one of my smaller-scale efforts. I have a much larger project that demonstrates more complex functionality and my full range of skills as a full-stack developer.
