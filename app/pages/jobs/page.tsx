@@ -4,7 +4,11 @@ import { Suspense } from "react";
 import Loading from "../../Loading";
 
 const fetchJobs = async (): Promise<Job[]> => {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs`;
+
+  console.log("Fetching jobs from:", apiUrl); // This will appear in build logs
+
+  const response = await fetch(apiUrl + "/api/jobs", {
     next: { revalidate: 20 }, // revalidate the page every 20 seconds
   });
   if (!response.ok) {
