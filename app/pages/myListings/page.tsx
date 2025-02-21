@@ -72,7 +72,7 @@ const Page = () => {
           const newDate = new Date(currentDateTime + extraTime);
 
           const response = await fetch(
-            process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
+            process.env.NEXT_PUBLIC_API_URL + "/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
@@ -95,7 +95,7 @@ const Page = () => {
           );
 
           const response = await fetch(
-            process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
+            process.env.NEXT_PUBLIC_API_URL + "/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
@@ -116,7 +116,7 @@ const Page = () => {
           const newDate = new Date(currentDateTime + extraTime);
 
           const response = await fetch(
-            process.env.NEXT_PUBLIC_API_URL + "/api/patchJobValidity",
+            process.env.NEXT_PUBLIC_API_URL + "/patchJobValidity",
             {
               method: "PATCH",
               body: JSON.stringify({
@@ -153,13 +153,10 @@ const Page = () => {
     loader?.classList.remove("hide");
 
     try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/jobs",
-        {
-          method: "DELETE",
-          body: JSON.stringify({ id }),
-        }
-      );
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/jobs", {
+        method: "DELETE",
+        body: JSON.stringify({ id }),
+      });
 
       if (!response.ok) throw new Error("Failed to delete job");
 

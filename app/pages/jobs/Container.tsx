@@ -141,7 +141,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
     try {
       // patch the new array to the user
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/users/" + user?.id,
+        process.env.NEXT_PUBLIC_API_URL + "/users/" + user?.id,
         { method: "PATCH", body: JSON.stringify({ jobs_filter: newFilterObj }) }
       );
 
@@ -189,7 +189,7 @@ const Container = ({ initJobs }: { initJobs: Job[] }) => {
     try {
       // patch the new array to the user
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/users/" + user?.id,
+        process.env.NEXT_PUBLIC_API_URL + "/users/" + user?.id,
         {
           method: "PATCH",
           body: JSON.stringify({ jobs_filter: { hidden: [], favorite: [] } }),

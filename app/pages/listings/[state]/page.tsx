@@ -104,7 +104,7 @@ const Page = () => {
     try {
       // handle edit save
       if (editingJob) {
-        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/jobs", {
           method: "PUT",
           // add the user id
           body: JSON.stringify({ ...insertedJob, user_id: user?.id }),
@@ -123,7 +123,7 @@ const Page = () => {
       }
       // handle new job save
       else {
-        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/jobs", {
           method: "POST",
           // add the user id
           body: JSON.stringify({ ...insertedJob, user_id: user?.id }),

@@ -46,7 +46,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
     loader?.classList.remove("hide");
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/login", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/login", {
         method: "POST",
         body: JSON.stringify({ email: email.value, password: password.value }),
       });
