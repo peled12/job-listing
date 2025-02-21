@@ -4,13 +4,21 @@ import { Suspense } from "react";
 import Loading from "../../Loading";
 
 const fetchJobs = async (): Promise<Job[]> => {
-  console.log(process.env.NEXT_PUBLIC_API_URL);
+  try {
+    console.log(process.env.NEXT_PUBLIC_API_URL);
 
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/jobs");
-  if (!response.ok) {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/jobs", {
+      next: { revalidate: 20 }, // revalidate the page every 20 seconds
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch jobs");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
     throw new Error("Failed to fetch jobs");
   }
-  return response.json();
 };
 
 const Page = async () => {
