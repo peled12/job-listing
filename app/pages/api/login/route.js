@@ -33,8 +33,6 @@ export async function POST(req) {
     // get the user (only with password)
     const userPasswordAndId = await getUserPwAndId(email);
 
-    console.log(userPasswordAndId);
-
     // if the password is correct
     if (userPasswordAndId.pw === password) {
       try {

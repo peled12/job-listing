@@ -60,19 +60,19 @@ const Job = ({
     action: string,
     type: string
   ): Promise<void> => {
-    // show or hide the view more component
-    if (type === "show") setactiveJob(job);
-    else if (type === "hide") setTimeout(() => setactiveJob(null), 200); // wait for the animation
-
-    // animation feature + wait for the state to change
-    await new Promise<void>((resolve) => setTimeout(resolve, 100));
-
     const clickedElement = e.target as HTMLElement;
 
     if (
       !clickedElement.closest(".job-more") ||
       clickedElement.closest(".un-view-more")
     ) {
+      // show or hide the view more component
+      if (type === "show") setactiveJob(job);
+      else if (type === "hide") setTimeout(() => setactiveJob(null), 200); // wait for the animation
+
+      // animation feature + wait for the state to change
+      await new Promise<void>((resolve) => setTimeout(resolve, 100));
+
       const wrapper = document.querySelector(".all-wrapper");
       const selectedJob = document.querySelector(".job-more");
       if (action === "add") {

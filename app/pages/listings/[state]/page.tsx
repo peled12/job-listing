@@ -123,9 +123,6 @@ const Page = () => {
       }
       // handle new job save
       else {
-        console.log(user);
-        console.log(user?.id);
-
         const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs", {
           method: "POST",
           // add the user id
@@ -138,14 +135,10 @@ const Page = () => {
         // get the inserted id
         const { inserted_id: insertedId } = await res.json();
 
-        console.log(insertedId);
-
         // save user with the new data
         const newUser = { ...user! }; // use non-null assertion
         newUser.jobs_draft.push({ ...insertedJob, id: insertedId }); // add the new id as well
         saveUser(newUser);
-
-        console.log(newUser);
       }
 
       navigateWithTransition({ url: "/pages/myListings" }); // navigate to the job listings
