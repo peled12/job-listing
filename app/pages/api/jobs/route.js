@@ -63,11 +63,9 @@ export async function POST(req) {
 export async function PUT(req) {
   const params = await req.json();
 
-  const { id, ...data } = params; // extract the id
-
   try {
     const result = await prisma.jobs.update({
-      where: { id: id },
+      where: { id: params.id },
       data: {
         salary: Number(params.salary),
         experience: params.experience,
