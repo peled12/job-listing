@@ -2,8 +2,6 @@ import { prisma } from "../lib/prisma";
 
 export async function GET() {
   try {
-    console.log("fetching jobs....");
-
     // fetch all active jobs
     const data = await prisma.jobs.findMany({
       where: { valid_through: { gt: new Date() } },
@@ -69,8 +67,20 @@ export async function PUT(req) {
 
   try {
     const result = await prisma.jobs.update({
-      where: { id },
-      data,
+      where: { id: id },
+      data: {
+        salary: Number(params.salary),
+        experience: params.experience,
+        location: params.location,
+        job_type: params.job_type,
+        title: params.title,
+        contact: params.contact,
+        description: params.description,
+        company: params.company,
+        more_description: params.more_description,
+        user_id: params.user_id,
+        valid_through: params.valid_through,
+      },
     });
 
     // successful put
