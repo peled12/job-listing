@@ -2,6 +2,8 @@ import { prisma } from "../lib/prisma";
 
 export async function GET() {
   try {
+    console.log("fetching jobs....");
+
     // fetch all active jobs
     const data = await prisma.jobs.findMany({
       where: { valid_through: { gt: new Date() } },
