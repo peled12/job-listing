@@ -1,32 +1,31 @@
-import { GetServerSideProps } from "next";
 import Container from "./Container";
 import { Job } from "../types";
+import { Suspense } from "react";
 import Loading from "../../Loading";
 
 const fetchJobs = async (): Promise<Job[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs`);
+  console.log(process.env.NEXT_PUBLIC_API_URL);
+
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/jobs", {
+    next: { revalidate: 20 }, // revalidate the page every 20 seconds
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch jobs");
   }
+
   return response.json();
 };
 
-const JobsPage = ({ jobs }: { jobs: Job[] }) => {
+const Page = async () => {
+  // fetch jobs
+  const initJobs = await fetchJobs();
+
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <h1 className="text-5xl m-8 mb-0">Jobs Listing</h1>
-      <Container initJobs={jobs} />
-    </>
+      <Container initJobs={initJobs} />
+    </Suspense>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const jobs = await fetchJobs();
-    return { props: { jobs } };
-  } catch (error) {
-    return { props: { jobs: [] } }; // Return empty array in case of error
-  }
-};
-
-export default JobsPage;
+export default Page;
