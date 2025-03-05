@@ -2,7 +2,7 @@
 
 This is one of my smaller projects built using [Next.js](https://nextjs.org/). It demonstrates my skills and experience as a full-stack developer, particularly with:
 - **Next.js** for server-side rendering and dynamic routing.
-- **MySQL** with **Prisma** as the ORM for efficient database interactions.
+- **PostgreSQL** with **Prisma** as the ORM for efficient database interactions.
 - **TypeScript** on the client side for type safety and maintainability.
 
 ## Deployment
